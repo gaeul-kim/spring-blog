@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <title>Hello world</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/default.css"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <div class="time">
+            <h2 th:text="${date}"></h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="nav">
+            <div class="info">
+            </div>
+            <div class="menu">
+            </div>
+        </div>
+        <div class="content">
+
+            <form action="#" th:action="@{/}" th:object="${user}" method="post">
+                <div><input type="text" th:field="*{name}" placeholder="이름"/></div>
+                <div><input type="password" th:field="*{password}" placeholder="비밀번호"/></div>
+                <div><input type="submit" value="Submit"/></div>
+            </form>
+
+            <div th:each="data,iterStat : ${list}">
+                <span th:text="${iterStat.count}"></span>
+                <span th:text="${data.name}">name</span>
+                <span th:text="${data.createdDate}">createdDate</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+</body>
+</html>
