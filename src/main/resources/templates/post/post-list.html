@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default-layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Hello world</title>
+    <link rel="stylesheet" type="text/css" href="/css/post.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="post-container">
+        <div class="post-header"><span class="post-category-title">게시판</span></div>
+        <div class="post-content">
+            <ul class="post-list">
+                <li class="post-item" th:each="post:${posts}">
+                    <div class="post-index" th:text="${post.id}">1</div>
+                    <div class="post-title" th:text="|[${post.category.name}] ${post.title}|">게시물 테스트</div>
+                    <div class="post-writer" th:text="${post.writer.nickname}">작성자</div>
+                    <div class="post-date" th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd')}">2017.12.25</div>
+                    <div class="post-count" th:text="${post.viewCount}">357</div>
+                </li>
+            </ul>
+        </div>
+        <div class="post-footer">
+            <div class="post-pagination">
+                <ul>
+                    <li th:class="${page.firstPage}?'disabled':''">
+                        <span th:if="${page.firstPage}">&larr; First</span>
+                        <a th:if="${not page.firstPage}"
+                           th:href="@{${page.url}(page=1,size=${page.size})}">&larr; First</a>
+                    </li>
+                    <li th:class="${page.hasPreviousPage}?'':'disabled'">
+                        <span th:if="${not page.hasPreviousPage}">&lt;</span>
+                        <a th:if="${page.hasPreviousPage}"
+                           th:href="@{${page.url}(page=${page.number-1},size=${page.size})}"
+                           title='Go to previous page'>&lt;</a>
+                    </li>
+                    <li th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+                        <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                        <a th:if="${not item.current}"
+                           th:href="@{${page.url}(page=${item.number},size=${page.size})}">
+                            <span th:text="${item.number}">1</span></a>
+                    </li>
+                    <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                        <span th:if="${not page.hasNextPage}">&gt;</span>
+                        <a th:if="${page.hasNextPage}"
+                           th:href="@{${page.url}(page=${page.number+1},size=${page.size})}"
+                           title='Go to next page'>&gt;</a>
+                    </li>
+                    <li th:class="${page.lastPage}? 'disabled' : ''">
+                        <span th:if="${page.lastPage}">Last &rarr;</span>
+                        <a th:if="${not page.lastPage}"
+                           th:href="@{${page.url}(page=${page.totalPages},size=${page.size})}">Last &rarr;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

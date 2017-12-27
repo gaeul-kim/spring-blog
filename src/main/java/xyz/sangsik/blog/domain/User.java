@@ -1,7 +1,9 @@
 package xyz.sangsik.blog.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,8 +18,17 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
+@ToString
+@NoArgsConstructor
 @EntityListeners(value = {AuditingEntityListener.class})
 public class User {
+
+    public User(String name, String password, String nickname) {
+        this.name = name;
+        this.password = password;
+        this.nickname = nickname;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -28,13 +39,16 @@ public class User {
     @NotBlank
     private String password;
 
+    @NotBlank
+    private String nickname;
+
     @CreatedDate
     private Date createdDate;
 
     @LastModifiedDate
     private Date lastModifiedDate;
 
-    private Integer loginCount = 0;
+    private int loginCount;
 
     public void increaseLoginCount() {
         this.loginCount++;
