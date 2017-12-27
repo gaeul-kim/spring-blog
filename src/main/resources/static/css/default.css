@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     height: 100%;
     overflow-y: hidden;
+    font-size: 0.97rem;
 }
 
 div.wrap {
@@ -17,12 +18,13 @@ div.header {
     height: 50px;
 }
 
-div.header div.time{
+div.header div.time {
     max-width: 900px;
     margin: 0 auto;
     position: relative;
 }
-div.header div.time h2{
+
+div.header div.time h2 {
     position: absolute;
     right: 0%;
 }
@@ -33,7 +35,7 @@ div.container {
     width: 900px;
     flex: 1;
     margin: 0 auto;
-    background-color: lavender;
+    /*background-color: lavender;*/
 }
 
 div.nav {
@@ -70,6 +72,9 @@ div.footer {
     height: 50px;
 }
 
+div.board {
+    padding: 10px;
+}
 
 
 

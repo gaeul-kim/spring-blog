@@ -1,0 +1,68 @@
+.post-container {
+    padding: 10px;
+}
+
+.post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.post-category-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.post-column-name {
+    text-align: center;
+    font-weight: bold;
+}
+
+.post-column-name > .post-title {
+}
+
+.post-column-name, .post-item {
+    display: flex;
+    border-bottom: 1px solid black;
+}
+
+.post-column-name, .post-item div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.post-item:hover.post-item {
+    cursor: pointer; /* a 링크 추가시 삭제예정 */
+    background-color: #f2f2f2;
+    color: #6897bb;
+}
+
+.post-item:last-child {
+    border: none;
+}
+
+.post-container .post-index {
+    width: 5%;
+}
+
+.post-container .post-title {
+
+    width: 55%;
+}
+
+.post-container .post-writer {
+    width: 15%;
+}
+
+.post-container .post-date {
+    width: 15%;
+}
+
+.post-container .post-count {
+    width: 10%;
+}
+
+.post-pagination {
+    text-align: center;
+}
