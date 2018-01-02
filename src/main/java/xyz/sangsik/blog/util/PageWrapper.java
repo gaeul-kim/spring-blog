@@ -24,15 +24,12 @@ public class PageWrapper<T> {
     private int currentNumber;
     private int maxSize;
 
-
-
-
-    public PageWrapper(Page<T> page, String url) {
+    public PageWrapper(Page<T> page, String baseUrl) {
         this.page = page;
-        this.url = url;
+        this.url = baseUrl;
         this.items = new ArrayList<PageItem>();
         this.currentNumber = page.getNumber() + 1; //start from 1 to match page.page
-        this.maxSize=page.getSize();
+        this.maxSize = page.getSize();
 
         int start, size;
         if (page.getTotalPages() <= maxSize) {
@@ -55,6 +52,11 @@ public class PageWrapper<T> {
             items.add(new PageItem(start + i, (start + i) == currentNumber));
         }
     }
+
+    public PageWrapper(Page<T> page) {
+        this(page, "");
+    }
+
 
     public List<PageItem> getItems() {
         return items;

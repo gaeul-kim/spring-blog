@@ -30,8 +30,13 @@ public class PostController {
 
     @GetMapping("/posts/{category}")
     public String list(Model model, Pageable pageable, @PathVariable Category category) {
+        if (category.equals(Category.INVALID)) {
+            return "redirect:/";
+        }
+
+        Page<Post> posts = postService.getAllByCategory(pageable, category);
+
         model.addAttribute("date", new Date());
-        Page<Post> posts = postService.getAll(pageable, category);
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<Post>(posts, ""));
         return "post/post-list";

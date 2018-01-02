@@ -25,8 +25,7 @@ public class PostService {
     }
 
 
-    public Page<Post> getAll(Pageable pageable, Category category) {
-        // todo : if (category == null) {}
+    public Page<Post> getAllByCategory(Pageable pageable, Category category) {
         return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
     }
 }
