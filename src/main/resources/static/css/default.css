@@ -33,7 +33,7 @@ div.container {
     width: 900px;
     flex: 1;
     margin: 0 auto;
-    background-color: lavender;
+/*    background-color: lavender;*/
 }
 
 div.nav {

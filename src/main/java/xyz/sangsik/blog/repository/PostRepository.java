@@ -12,5 +12,6 @@ import xyz.sangsik.blog.domain.Post;
  */
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+    Page<Post> findByIsDeleted(Pageable pageable, boolean isDeleted);
     Page<Post> findByCategoryAndIsDeleted(Pageable pageable, Category category, boolean isDeleted);
 }

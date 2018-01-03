@@ -8,6 +8,8 @@ import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
 import xyz.sangsik.blog.repository.PostRepository;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by sangsik on 2017-12-14.
  */
@@ -16,16 +18,24 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    @Transactional
     public Post get(Long id) {
-        return postRepository.findOne(id);
+        Post post = postRepository.findOne(id);
+        if (post != null) {
+            post.increaseViewCount();
+        }
+        return post;
     }
 
     public Post add(Post post) {
         return postRepository.save(post);
     }
 
-
-    public Page<Post> getAllByCategory(Pageable pageable, Category category) {
-        return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
+    public Page<Post> getAll(Pageable pageable, Category category) {
+        if (category == Category.ALL) {
+            return postRepository.findByIsDeleted(pageable, false);
+        } else {
+            return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
+        }
     }
 }

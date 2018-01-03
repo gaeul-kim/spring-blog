@@ -15,8 +15,6 @@ import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.CategoryPropertyEditor;
 import xyz.sangsik.blog.util.PageWrapper;
 
-import java.util.Date;
-
 @Controller
 public class PostController {
 
@@ -28,17 +26,26 @@ public class PostController {
         webDataBinder.registerCustomEditor(Category.class, new CategoryPropertyEditor());
     }
 
+    @GetMapping({"/posts", "/posts/"})
+    public String listAllCategory(Model model, Pageable pageable) {
+        Page<Post> posts = postService.getAll(pageable, Category.ALL);
+
+        model.addAttribute("category", Category.ALL);
+        model.addAttribute("posts", posts.getContent());
+        model.addAttribute("page", new PageWrapper<Post>(posts));
+        return "post/post-list";
+    }
+
     @GetMapping("/posts/{category}")
     public String list(Model model, Pageable pageable, @PathVariable Category category) {
-        if (category.equals(Category.INVALID)) {
+        if (category == Category.INVALID) {
             return "redirect:/";
         }
 
-        Page<Post> posts = postService.getAllByCategory(pageable, category);
+        Page<Post> posts = postService.getAll(pageable, category);
 
-        model.addAttribute("date", new Date());
         model.addAttribute("posts", posts.getContent());
-        model.addAttribute("page", new PageWrapper<Post>(posts, ""));
+        model.addAttribute("page", new PageWrapper<Post>(posts));
         return "post/post-list";
     }
 
