@@ -43,18 +43,18 @@ public class BlogApplication {
             for (int i = 1; i <= 500; i++) {
                 switch (i % 3) {
                     case 0:
-                        category = Category.NOTICE;
+                        category = Category.IT;
                         break;
                     case 1:
-                        category = Category.QUESTION;
+                        category = Category.PROGRAMMING;
                         break;
                     case 2:
-                        category = Category.MARKET;
+                        category = Category.TRAVEL;
                         break;
                 }
                 postRepository.save(new Post(category
-                        , "질문" + i
-                        , "질문내용" + i
+                        , "포스트 제목" + i
+                        , "내용" + i
                         , userRepository.findOne((long) (Math.random() * 3 + 1))));
             }
         }

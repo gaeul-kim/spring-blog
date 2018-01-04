@@ -18,6 +18,14 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    public Page<Post> getAll(Pageable pageable, Category category) {
+        if (category == Category.ALL) {
+            return postRepository.findByIsDeleted(pageable, false);
+        } else {
+            return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
+        }
+    }
+
     @Transactional
     public Post get(Long id) {
         Post post = postRepository.findOne(id);
@@ -29,13 +37,5 @@ public class PostService {
 
     public Post add(Post post) {
         return postRepository.save(post);
-    }
-
-    public Page<Post> getAll(Pageable pageable, Category category) {
-        if (category == Category.ALL) {
-            return postRepository.findByIsDeleted(pageable, false);
-        } else {
-            return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
-        }
     }
 }

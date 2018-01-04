@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default-layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>Blog Home</title>
+</head>
+
+<body>
+<!-- Blog Entries Column -->
+<div layout:fragment="content">
+
+    <h1 class="my-4">
+        <span th:text="${category.name}">Page Heading</span>
+        <small>Secondary Text</small>
+    </h1>
+
+    <!-- Blog Post -->
+    <div class="card mb-4" th:each="post:${posts}">
+        <div class="card-body">
+            <a class="text-dark nounderline" th:href="@{/post/{id}(id=${post.id})}">
+                <h2 class="card-title"><span th:text="${post.title}">Post Title</span></h2>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+                    aliquid
+                    atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero
+                    voluptate voluptatibus possimus, veniam magni quis!</p></a>
+        </div>
+        <div class="card-footer text-muted">
+            <a th:href="@{/post/list(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
+            <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}+' by '">Posted on January 1, 2017 by</span>
+            <a href="#" th:text="${post.writer.nickname}">Start Bootstrap</a>
+        </div>
+    </div>
+
+
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center mb-4">
+        <li th:class="${page.firstPage}?'disabled':''">
+            <span th:if="${page.firstPage}">&laquo;</span>
+            <a th:if="${not page.firstPage}"
+               th:href="@{${page.url}(page=1,size=${page.size})}">&larr; First</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">&larr;</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+    </ul>
+
+</div>
+</body>
+</html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
 import xyz.sangsik.blog.service.PostService;
@@ -26,33 +27,22 @@ public class PostController {
         webDataBinder.registerCustomEditor(Category.class, new CategoryPropertyEditor());
     }
 
-    @GetMapping({"/posts", "/posts/"})
-    public String listAllCategory(Model model, Pageable pageable) {
-        Page<Post> posts = postService.getAll(pageable, Category.ALL);
-
-        model.addAttribute("category", Category.ALL);
-        model.addAttribute("posts", posts.getContent());
-        model.addAttribute("page", new PageWrapper<Post>(posts));
-        return "post/post-list";
-    }
-
-    @GetMapping("/posts/{category}")
-    public String list(Model model, Pageable pageable, @PathVariable Category category) {
-        if (category == Category.INVALID) {
-            return "redirect:/";
-        }
+    @GetMapping("/post/list")
+    public String listAllCategory(Model model, Pageable pageable, @RequestParam(value = "category", required = false, defaultValue = "ALL") Category category) {
 
         Page<Post> posts = postService.getAll(pageable, category);
 
+        model.addAttribute("category", category);
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<Post>(posts));
-        return "post/post-list";
+        return "home";
     }
+
 
     @GetMapping("/post/{id}")
     public String view(Model model, @PathVariable Long id) {
         model.addAttribute("post", postService.get(id));
-        return "post/post-view";
+        return "post";
     }
 
     @GetMapping("/post/edit/{id}")

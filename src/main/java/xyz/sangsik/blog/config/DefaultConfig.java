@@ -22,9 +22,8 @@ public class DefaultConfig extends WebMvcConfigurerAdapter {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
         resolver.setOneIndexedParameters(true);
-        resolver.setFallbackPageable(new PageRequest(0, 10, Sort.Direction.DESC, "id"));
+        resolver.setFallbackPageable(new PageRequest(0, 5, Sort.Direction.DESC, "id"));
         argumentResolvers.add(resolver);
         super.addArgumentResolvers(argumentResolvers);
     }
-
 }
