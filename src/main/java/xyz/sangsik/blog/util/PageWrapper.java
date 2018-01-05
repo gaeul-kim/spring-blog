@@ -20,6 +20,10 @@ public class PageWrapper<T> {
     @Setter
     private String url;
 
+    @Getter
+    @Setter
+    private long totalCount;
+
     private List<PageItem> items;
     private int currentNumber;
     private int maxSize;
@@ -30,6 +34,7 @@ public class PageWrapper<T> {
         this.items = new ArrayList<PageItem>();
         this.currentNumber = page.getNumber() + 1; //start from 1 to match page.page
         this.maxSize = page.getSize();
+        this.totalCount = page.getTotalElements();
 
         int start, size;
         if (page.getTotalPages() <= maxSize) {

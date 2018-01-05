@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
+import xyz.sangsik.blog.domain.PostPredicate;
+import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.repository.PostRepository;
 
 import javax.transaction.Transactional;
@@ -18,12 +20,9 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
-    public Page<Post> getAll(Pageable pageable, Category category) {
-        if (category == Category.ALL) {
-            return postRepository.findByIsDeleted(pageable, false);
-        } else {
-            return postRepository.findByCategoryAndIsDeleted(pageable, category, false);
-        }
+    @Transactional
+    public Page<Post> search(Category category, String writer, Pageable pageable) {
+        return postRepository.findAll(PostPredicate.search(category, writer), pageable);
     }
 
     @Transactional

@@ -6,10 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
 import xyz.sangsik.blog.service.PostService;
@@ -27,29 +24,42 @@ public class PostController {
         webDataBinder.registerCustomEditor(Category.class, new CategoryPropertyEditor());
     }
 
-    @GetMapping("/post/list")
-    public String listAllCategory(Model model, Pageable pageable, @RequestParam(value = "category", required = false, defaultValue = "ALL") Category category) {
-
-        Page<Post> posts = postService.getAll(pageable, category);
+    @GetMapping("/post")
+    public String home(Model model, @RequestParam(value = "category", required = false, defaultValue = "ALL") Category category, String writer, Pageable pageable) {
+        Page<Post> posts = postService.search(category, writer, pageable);
 
         model.addAttribute("category", category);
+        model.addAttribute("writer", writer);
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<Post>(posts));
-        return "home";
+        return "/post/home";
     }
-
 
     @GetMapping("/post/{id}")
     public String view(Model model, @PathVariable Long id) {
         model.addAttribute("post", postService.get(id));
-        return "post";
+        return "/post/post";
     }
 
-    @GetMapping("/post/edit/{id}")
+    @GetMapping("/add")
+    public String add(Model model) {
+        return "/post/add";
+    }
+
+    @PostMapping("/add")
+    public String add(Model model, Post post) {
+        return "redirect:/post/" + post.getId();
+    }
+
+    @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable Long id) {
         model.addAttribute("post", postService.get(id));
-        // todo : add model attribute
-        return "post/post-edit";
+        return "edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(Model model, Post post) {
+        return "redirect:/post/" + post.getId();
     }
 
 

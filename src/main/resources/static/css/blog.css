@@ -16,3 +16,29 @@ body {
         padding-top: 56px;
     }
 }
+
+.title-summary {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    max-height: 2.4em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.content-summary {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    max-height: 4.5em;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

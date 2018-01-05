@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default-layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>Blog Home</title>
+</head>
+
+<body>
+<!-- Blog Entries Column -->
+<div layout:fragment="content">
+
+    <h1 class="my-4">
+        <span th:text="${category.name}">Category name</span>
+        <small th:text="'('+${page.totalCount}+')'">(500)</small>
+    </h1>
+
+    <!-- Blog Post -->
+    <div class="card mb-4" th:each="post:${posts}">
+        <div class="card-body">
+            <a class="text-dark nounderline" th:href="@{post/{id}(id=${post.id})}">
+                <h2 class="card-title title-summary"><span th:text="${post.title}">Post Title</span></h2>
+                <p class="card-text content-summary" th:text="${post.content}"></p></a>
+        </div>
+        <div class="card-footer text-muted">
+            <a th:href="@{/post(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
+            <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}+' by '">Posted on January 1, 2017 by</span>
+            <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}">Start Bootstrap</a>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center mb-4">
+        <li th:class="${page.firstPage}?'page-item disabled':'page-item'">
+            <span class="page-link" th:if="${page.firstPage}">&laquo;</span>
+            <a class="page-link" th:if="${not page.firstPage}"
+               th:href="@{${page.url}(category=${category},writer=${writer},page=1)}">&laquo;</a>
+        </li>
+        <li th:class="${page.hasPreviousPage}?'page-item':'page-item disabled'">
+            <span class="page-link" th:if="${not page.hasPreviousPage}">&larr;</span>
+            <a class="page-link" th:if="${page.hasPreviousPage}"
+               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.number-1})}"
+               title='Go to previous page'>&larr;</a>
+        </li>
+        <li th:each="item : ${page.items}" th:class="${item.current}? 'page-item active' : 'page-item'">
+            <span span class="page-link" th:if='${item.current}' th:text='${item.number}'>1</span>
+            <a span class="page-link" th:if="${not item.current}"
+               th:href="@{${page.url}(category=${category},writer=${writer},page=${item.number})}">
+                <span th:text="${item.number}">1</span></a>
+        </li>
+        <li th:class="${page.hasNextPage}? 'page-item' : 'page-item disabled'">
+            <span span class="page-link" th:if="${not page.hasNextPage}">&gt;</span>
+            <a span class="page-link" th:if="${page.hasNextPage}"
+               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.number+1})}"
+               title='Go to next page'>&gt;</a>
+        </li>
+        <li th:class="${page.lastPage}? 'page-item disabled' : 'page-item'">
+            <span span class="page-link" th:if="${page.lastPage}">&raquo;</span>
+            <a span class="page-link" th:if="${not page.lastPage}"
+               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.totalPages})}">&raquo;</a>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

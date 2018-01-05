@@ -17,14 +17,15 @@
     <!-- Author -->
     <p class="lead">
         by
-        <a href="#">Start Bootstrap</a>
+        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}" href="#">Start Bootstrap</a>
     </p>
 
     <hr>
 
 
     <!-- Date/Time -->
-    <p>Posted on <span th:text="${post.createdDate}">January 1, 2017 at 12:00 PM</span></p>
+
+    <p><span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}">January 1, 2017 at 12:00 PM</span></p>
 
     <hr>
 

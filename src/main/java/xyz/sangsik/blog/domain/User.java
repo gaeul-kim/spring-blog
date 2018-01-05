@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -34,12 +35,15 @@ public class User {
     private Long id;
 
     @NotBlank
+    @Length(max = 10)
     private String name;
 
     @NotBlank
+    @Length(min = 5, max = 20)
     private String password;
 
     @NotBlank
+    @Length(max = 15)
     private String nickname;
 
     @CreatedDate

@@ -8,7 +8,7 @@ import lombok.Setter;
  * Created by sangsik on 2017-12-27.
  */
 public enum Category {
-    IT("IT"), PROGRAMMING("프로그래밍"), TRAVEL("여행"), ALL("전체목록"), INVALID("유효하지 않은 카테고리");
+    IT("IT"), PROGRAMMING("프로그래밍"), TRAVEL("여행"), ALL("전체");
 
     Category(String name) {
         this.name = name;

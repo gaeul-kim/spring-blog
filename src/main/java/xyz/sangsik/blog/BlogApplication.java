@@ -1,5 +1,7 @@
 package xyz.sangsik.blog;
 
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,17 +32,19 @@ public class BlogApplication {
         public void run(String... args) throws Exception {
 
             User[] users = {
-                    new User("sangsik", "1111", "김상식")
-                    , new User("sion", "2222", "송시온")
-                    , new User("iu", "3333", "이지은")
+                    new User("sangsik", "11111", "김상식")
+                    , new User("sion", "22222", "송시온")
+                    , new User("iu", "33333", "이지은")
             };
             for (User u : users) {
                 userRepository.save(u);
             }
 
             Category category = null;
+            Lorem lorem = LoremIpsum.getInstance();
 
             for (int i = 1; i <= 500; i++) {
+
                 switch (i % 3) {
                     case 0:
                         category = Category.IT;
@@ -53,8 +57,8 @@ public class BlogApplication {
                         break;
                 }
                 postRepository.save(new Post(category
-                        , "포스트 제목" + i
-                        , "내용" + i
+                        , lorem.getTitle(1,10)
+                        , lorem.getParagraphs(1,5)
                         , userRepository.findOne((long) (Math.random() * 3 + 1))));
             }
         }

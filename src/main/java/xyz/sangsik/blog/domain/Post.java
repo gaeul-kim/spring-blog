@@ -1,6 +1,7 @@
 package xyz.sangsik.blog.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,9 +39,11 @@ public class Post {
     private Category category;
 
     @NotBlank
+    @Length(max = 100)
     private String title;
 
     @NotBlank
+    @Length(max = 5000)
     private String content;
 
     @ManyToOne

@@ -14,7 +14,7 @@ public class CategoryPropertyEditor extends PropertyEditorSupport {
         try {
             this.setValue(Category.valueOf(text.trim().toUpperCase()));
         } catch (IllegalArgumentException e) {
-            this.setValue(Category.INVALID);
+            this.setValue(Category.ALL);
         }
     }
 }
