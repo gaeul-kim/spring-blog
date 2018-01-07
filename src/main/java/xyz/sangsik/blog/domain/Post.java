@@ -31,6 +31,7 @@ public class Post {
     }
 
     @Id
+    @Getter
     @GeneratedValue
     private Long id;
 

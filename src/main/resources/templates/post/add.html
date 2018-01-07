@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default-layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>Blog Home</title>
+    <script src="/simplemde/dist/simplemde.min.js"></script>
+    <link rel="stylesheet" href="/simplemde/dist/simplemde.min.css">
+</head>
+
+<body>
+
+<!-- Post Content Column -->
+<div layout:fragment="content">
+
+    <!-- Title -->
+    <h1 class="mt-4">Post Title</h1>
+
+    <!-- Author -->
+    <p class="lead">
+        by
+        <a href="#">Start Bootstrap</a>
+    </p>
+
+    <hr>
+
+
+    <!-- Date/Time -->
+
+    <p><span>January 1, 2017 at 12:00 PM</span></p>
+
+    <hr>
+
+
+    <div id="editSection"></div>
+    <script>
+        var simplemde = new SimpleMDE();
+        var simplemde = new SimpleMDE({ element: document.getElementById("editSection") });
+
+
+
+
+
+    </script>
+    <hr>
+
+    <!-- Comments Form -->
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>
