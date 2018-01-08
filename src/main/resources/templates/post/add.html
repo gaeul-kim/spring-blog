@@ -4,8 +4,8 @@
 
 <head>
     <title>Blog Home</title>
-    <script src="/simplemde/dist/simplemde.min.js"></script>
-    <link rel="stylesheet" href="/simplemde/dist/simplemde.min.css">
+    <script src="/simpleMDE/js/simplemde.min.js"></script>
+    <link href="/simpleMDE/css/simplemde.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -13,56 +13,34 @@
 <!-- Post Content Column -->
 <div layout:fragment="content">
 
-    <!-- Title -->
-    <h1 class="mt-4">Post Title</h1>
+    <div class="mb-4">
 
-    <!-- Author -->
-    <p class="lead">
-        by
-        <a href="#">Start Bootstrap</a>
-    </p>
-
-    <hr>
+        <!-- Title -->
+        <h1 class="mt-4">New Post</h1>
+        <hr>
 
 
-    <!-- Date/Time -->
-
-    <p><span>January 1, 2017 at 12:00 PM</span></p>
-
-    <hr>
-
-
-    <div id="editSection"></div>
-    <script>
-        var simplemde = new SimpleMDE();
-        var simplemde = new SimpleMDE({ element: document.getElementById("editSection") });
-
-
-
-
-
-    </script>
-    <hr>
-
-    <!-- Comments Form -->
-    <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+        <!-- Title Form -->
+        <div class="input-group mb-2">
+            <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <input type="text" class="form-control" placeholder="Title">
         </div>
+
+        <!-- Content Form -->
+        <textarea style="overflow-y: scroll" id="editSection" placeholder="Content"></textarea>
+        <button type="submit" class="btn btn-secondary form-control">Submit</button>
+
+        <script>
+            var simplemde = new SimpleMDE({element: $("#editSection")[0]});
+        </script>
+
     </div>
-
-
-</div>
-
 
 </div>
 
 </body>
-
 </html>
