@@ -9,9 +9,12 @@ import lombok.Setter;
  */
 @AllArgsConstructor
 public enum Category {
-    IT("IT"), PROGRAMMING("프로그래밍"), TRAVEL("여행"), ALL("전체");
+    IT("IT", true), PROGRAMMING("프로그래밍", true), TRAVEL("여행", true), INVALID("미분류", true), ALL("전체", false);
 
     @Getter
-    @Setter
     private String name;
+
+    @Setter
+    @Getter
+    private boolean selectable;
 }

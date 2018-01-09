@@ -14,6 +14,7 @@ public class CategoryPropertyEditor extends PropertyEditorSupport {
         try {
             this.setValue(Category.valueOf(text.trim().toUpperCase()));
         } catch (IllegalArgumentException e) {
+            // todo : 바인딩이 실패했을경우 어떻게 페이지를 이동시킬것인가 고민
             this.setValue(Category.ALL);
         }
     }

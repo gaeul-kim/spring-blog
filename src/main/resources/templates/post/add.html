@@ -22,20 +22,56 @@
 
         <!-- Title Form -->
         <div class="input-group mb-2">
-            <select class="form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
+            <select id="post-category" class="form-control">
+                <option th:each="category:${categories}" th:if="${category.selectable}" th:value="${category}"
+                        th:text="${category.name}">1
+                </option>
             </select>
-            <input type="text" class="form-control" placeholder="Title">
+            <input id="post-title" class="form-control" type="text" placeholder="Title">
         </div>
 
         <!-- Content Form -->
-        <textarea style="overflow-y: scroll" id="editSection" placeholder="Content"></textarea>
-        <button type="submit" class="btn btn-secondary form-control">Submit</button>
+        <textarea id="post-content" placeholder="Content"></textarea>
+        <button id="post-submit" class="btn btn-secondary form-control" type="button">Submit</button>
 
         <script>
-            var simplemde = new SimpleMDE({element: $("#editSection")[0]});
+            var simplemde = new SimpleMDE({element: $("#post-content")[0]});
+
+            $('#post-submit').click(function () {
+
+                var category = $('#post-category').val();
+                var title = $('#post-title').val();
+                var content = simplemde.value();
+
+                if (true) {
+                    var post = {
+                        'category': category,
+                        'title': title,
+                        'content': content
+                    };
+                    submit(post);
+                }
+            });
+
+            function validate() {
+                for (i = 0; i < arguments.length; i++) {
+                    if (!arguments[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function submit(param) {
+                $.post('/post/add', param, function (data) {
+                    if (data.status == 'success') {
+                        location.href = '/post/' + data.id;
+                    } else {
+                        console.log(data.message);
+                    }
+                });
+            }
+
         </script>
 
     </div>
