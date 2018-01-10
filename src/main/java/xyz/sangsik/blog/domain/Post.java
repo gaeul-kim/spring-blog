@@ -1,8 +1,10 @@
 package xyz.sangsik.blog.domain;
 
+import com.youbenzi.mdtool.tool.MDTool;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.jsoup.Jsoup;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -43,8 +45,9 @@ public class Post {
     @Length(max = 100)
     private String title;
 
+    @Lob
     @NotBlank
-    @Length(max = 5000)
+    @Length(max = 10000)
     private String content;
 
     @ManyToOne
@@ -64,5 +67,19 @@ public class Post {
 
     public void increaseViewCount() {
         this.viewCount++;
+    }
+
+    public String getHtmlContent() {
+        return MDTool.markdown2Html(this.content);
+    }
+
+    public String getContentSummary() {
+        int MAX_SUMMARY_LENGTH = 300;
+
+        String plainText = Jsoup.parse(getHtmlContent()).text();
+        if (plainText.length() > MAX_SUMMARY_LENGTH) {
+            plainText = plainText.substring(0, MAX_SUMMARY_LENGTH);
+        }
+        return plainText;
     }
 }

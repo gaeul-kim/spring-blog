@@ -35,7 +35,7 @@
         <button id="post-submit" class="btn btn-secondary form-control" type="button">Submit</button>
 
         <script>
-            var simplemde = new SimpleMDE({element: $("#post-content")[0]});
+            var simplemde = new SimpleMDE({element: $("#post-content")[0], spellChecker: false});
 
             $('#post-submit').click(function () {
 
@@ -67,7 +67,7 @@
                     if (data.status == 'success') {
                         location.href = '/post/' + data.id;
                     } else {
-                        console.log(data.message);
+                        alert(data.message);
                     }
                 });
             }

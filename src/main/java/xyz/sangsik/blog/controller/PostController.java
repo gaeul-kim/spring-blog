@@ -87,6 +87,4 @@ public class PostController {
     public String edit(Model model, Post post) {
         return "redirect:/post/" + post.getId();
     }
-
-
 }

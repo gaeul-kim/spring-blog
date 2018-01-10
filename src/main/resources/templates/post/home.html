@@ -20,7 +20,7 @@
         <div class="card-body">
             <a class="text-dark nounderline" th:href="@{post/{id}(id=${post.id})}">
                 <h2 class="card-title title-summary"><span th:text="${post.title}">Post Title</span></h2>
-                <p class="card-text content-summary" th:text="${post.content}"></p></a>
+                <p class="card-text content-summary" th:text="${post.contentSummary}"></p></a>
         </div>
         <div class="card-footer text-muted">
             <a th:href="@{/post(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
