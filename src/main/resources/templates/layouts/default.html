@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="common/config :: configFragment"></head>
+
+<body>
+<!-- Navigation -->
+<nav th:replace="common/navigation :: navigationFragment"></nav>
+
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- row -->
+    <div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-12" layout:fragment="content"></div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+    </div>
+</footer>
+<!-- /.footer -->
+
+
+</body>
+
+</html>

@@ -45,25 +45,25 @@ public class PostController {
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<Post>(posts));
         model.addAttribute("active", "home");
-        return "/post/home";
+        return "/post/list";
     }
 
     @GetMapping("/post/{id}")
     public String view(Model model, @PathVariable Long id) {
         model.addAttribute("post", postService.get(id));
-        return "/post/post";
+        return "/post/detail";
     }
 
-    @GetMapping("/post/add")
-    public String add(Model model) {
+    @GetMapping("/write")
+    public String write(Model model) {
         model.addAttribute("categories", Category.values());
         model.addAttribute("active", "add");
-        return "/post/add";
+        return "/post/write";
     }
 
     @ResponseBody
-    @PostMapping("/post/add")
-    public ResponseDTO add(Model model, @Valid Post post, BindingResult bindingResult, ResponseDTO dto) {
+    @PostMapping("/write")
+    public ResponseDTO write(Model model, @Valid Post post, BindingResult bindingResult, ResponseDTO dto) {
         if (bindingResult.hasErrors()) {
             dto.setBindingError();
             return dto;
@@ -76,14 +76,14 @@ public class PostController {
         return dto;
     }
 
-    @GetMapping("/post/edit/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable Long id) {
         model.addAttribute("post", postService.get(id));
 
         return "edit";
     }
 
-    @PostMapping("/post/edit")
+    @PostMapping("/edit")
     public String edit(Model model, Post post) {
         return "redirect:/post/" + post.getId();
     }

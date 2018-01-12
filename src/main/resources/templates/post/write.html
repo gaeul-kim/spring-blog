@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default-layout"
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/sidebar"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<head>
-    <title>Blog Home</title>
-    <script src="/simpleMDE/js/simplemde.min.js"></script>
-    <link href="/simpleMDE/css/simplemde.min.css" rel="stylesheet">
-</head>
-
 <body>
 
-<!-- Post Content Column -->
-<div layout:fragment="content">
+<th:block layout:fragment="css">
+    <link href="/simpleMDE/css/simplemde.min.css" rel="stylesheet">
+</th:block>
 
+<th:block layout:fragment="script">
+    <script src="/simpleMDE/js/simplemde.min.js"></script>
+</th:block>
+
+<div layout:fragment="content">
     <div class="mb-4">
 
         <!-- Title -->
         <h1 class="mt-4">New Post</h1>
         <hr>
 
-
         <!-- Title Form -->
+        <div class="input-group mb-2">
+            <input id="post-title" class="form-control" type="text" placeholder="Title">
+        </div>
         <div class="input-group mb-2">
             <select id="post-category" class="form-control">
                 <option th:each="category:${categories}" th:if="${category.selectable}" th:value="${category}"
                         th:text="${category.name}">1
                 </option>
             </select>
-            <input id="post-title" class="form-control" type="text" placeholder="Title">
+            <input id="post-tag" class="form-control" type="text" placeholder="Tag">
         </div>
-
         <!-- Content Form -->
         <textarea id="post-content" placeholder="Content"></textarea>
         <button id="post-submit" class="btn btn-secondary form-control" type="button">Submit</button>
@@ -71,7 +71,6 @@
                     }
                 });
             }
-
         </script>
 
     </div>

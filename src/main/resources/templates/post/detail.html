@@ -1,40 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/full-layout"
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/sidebar"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<head>
-    <title>Blog Home</title>
-</head>
-
 <body>
-
-<!-- Post Content Column -->
 <div layout:fragment="content">
 
     <!-- Title -->
     <h1 class="mt-4" th:text="${post.title}">Post Title</h1>
-
-    <!-- Author -->
-    <p class="lead">
-        by
-        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}" href="#">Start Bootstrap</a>
-    </p>
-
     <hr>
 
 
-    <!-- Date/Time -->
-
-    <p><span
-            th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}">January 1, 2017 at 12:00 PM</span>
+    <!-- Date/Time/Author -->
+    <p>
+        <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}">January 1, 2017 at 12:00 PM</span>
+        <span>by</span>
+        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}" href="#">Start Bootstrap</a>
     </p>
-
     <hr>
 
     <!--    &lt;!&ndash; Preview Image &ndash;&gt;
         <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
 
-        <hr>-->
+    <hr>-->
+
     <div id="content-area" th:utext="${post.htmlContent}"></div>
     <hr>
 
@@ -96,9 +83,7 @@
 
 </div>
 
-
 </div>
 
 </body>
-
 </html>
