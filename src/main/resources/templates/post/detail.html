@@ -11,9 +11,9 @@
 
     <!-- Date/Time/Author -->
     <p>
-        <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}">January 1, 2017 at 12:00 PM</span>
-        <span>by</span>
-        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}" href="#">Start Bootstrap</a>
+        <a th:href="@{/post(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
+        <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}+' by '">Posted on January 1, 2017 by</span>
+        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.nickname}">Start Bootstrap</a>
     </p>
     <hr>
 

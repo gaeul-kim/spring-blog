@@ -63,7 +63,7 @@
             }
 
             function submit(param) {
-                $.post('/post/add', param, function (data) {
+                $.post('/write', param, function (data) {
                     if (data.status == 'success') {
                         location.href = '/post/' + data.id;
                     } else {

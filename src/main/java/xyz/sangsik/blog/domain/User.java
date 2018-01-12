@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,6 +31,10 @@ public class User {
         this.nickname = nickname;
     }
 
+    public User(String name, String password) {
+        this(name, password, name);
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -42,7 +47,6 @@ public class User {
     @Length(min = 5, max = 20)
     private String password;
 
-    @NotBlank
     @Length(max = 15)
     private String nickname;
 
@@ -51,6 +55,10 @@ public class User {
 
     @LastModifiedDate
     private Date lastModifiedDate;
+
+    public void setNickname(String nickname) {
+        this.nickname = (StringUtils.isEmpty(nickname)) ? this.name : nickname;
+    }
 
     private int loginCount;
 

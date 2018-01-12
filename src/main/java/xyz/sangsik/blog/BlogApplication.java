@@ -32,7 +32,7 @@ public class BlogApplication {
         public void run(String... args) throws Exception {
 
             User[] users = {
-                    new User("sangsik", "11111", "김상식")
+                    new User("sangsik", "11111")
                     , new User("sion", "22222", "송시온")
                     , new User("iu", "33333", "이지은")
             };
