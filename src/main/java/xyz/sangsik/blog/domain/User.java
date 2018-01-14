@@ -25,14 +25,9 @@ import java.util.Date;
 @EntityListeners(value = {AuditingEntityListener.class})
 public class User {
 
-    public User(String name, String password, String nickname) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.nickname = nickname;
-    }
-
-    public User(String name, String password) {
-        this(name, password, name);
     }
 
     @Id
@@ -40,25 +35,18 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Length(max = 10)
+    @Length(min = 3, max = 15)
     private String name;
 
     @NotBlank
     @Length(min = 5, max = 20)
     private String password;
 
-    @Length(max = 15)
-    private String nickname;
-
     @CreatedDate
     private Date createdDate;
 
     @LastModifiedDate
     private Date lastModifiedDate;
-
-    public void setNickname(String nickname) {
-        this.nickname = (StringUtils.isEmpty(nickname)) ? this.name : nickname;
-    }
 
     private int loginCount;
 

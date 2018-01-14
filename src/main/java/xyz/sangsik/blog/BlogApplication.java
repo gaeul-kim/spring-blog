@@ -33,8 +33,8 @@ public class BlogApplication {
 
             User[] users = {
                     new User("sangsik", "11111")
-                    , new User("sion", "22222", "송시온")
-                    , new User("iu", "33333", "이지은")
+                    , new User("sion", "22222")
+                    , new User("iuu", "33333")
             };
             for (User u : users) {
                 userRepository.save(u);
@@ -57,8 +57,8 @@ public class BlogApplication {
                         break;
                 }
                 postRepository.save(new Post(category
-                        , lorem.getTitle(1,10)
-                        , lorem.getParagraphs(1,5)
+                        , lorem.getTitle(1, 10)
+                        , lorem.getParagraphs(1, 5)
                         , userRepository.findOne((long) (Math.random() * 3 + 1))));
             }
         }
