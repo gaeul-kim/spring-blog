@@ -10,17 +10,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
-import xyz.sangsik.blog.domain.ResponseDTO;
-import xyz.sangsik.blog.domain.User;
+import xyz.sangsik.blog.domain.PostResponse;
 import xyz.sangsik.blog.repository.UserRepository;
 import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.CategoryPropertyEditor;
 import xyz.sangsik.blog.util.PageWrapper;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 public class PostController {
@@ -63,17 +59,17 @@ public class PostController {
 
     @ResponseBody
     @PostMapping("/write")
-    public ResponseDTO write(Model model, @Valid Post post, BindingResult bindingResult, ResponseDTO dto) {
+    public PostResponse write(Model model, @Valid Post post, BindingResult bindingResult, PostResponse response) {
         if (bindingResult.hasErrors()) {
-            dto.setBindingError();
-            return dto;
+            response.setBindingError();
+            return response;
         }
 
         // todo: 사용자 정보 입력
         post.setWriter(userRepository.findOne(1L));
 
-        dto.setSuccess(postService.add(post));
-        return dto;
+        response.setSuccess(postService.add(post));
+        return response;
     }
 
     @GetMapping("/edit/{id}")

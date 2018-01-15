@@ -20,16 +20,18 @@ body {
         padding-top: 56px;
     }
 }
-footer{
+
+footer {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
 }
-.wrap{
+
+.wrap {
     min-height: 100%;
     position: relative;
-    padding-bottom : 8rem !important;
+    padding-bottom: 8rem !important;
 }
 
 .title-summary {
@@ -60,4 +62,10 @@ footer{
 
 .CodeMirror {
     height: 300px;
+}
+
+#join-form .form-group {
+    max-width: 300px;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }

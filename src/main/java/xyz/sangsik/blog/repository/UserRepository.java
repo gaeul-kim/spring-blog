@@ -8,5 +8,6 @@ import xyz.sangsik.blog.domain.User;
  * Created by sangsik on 2017-12-14.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long> {
+    int countByName(String name);
 }

@@ -39,7 +39,6 @@ public class User {
     private String name;
 
     @NotBlank
-    @Length(min = 5, max = 20)
     private String password;
 
     @CreatedDate
