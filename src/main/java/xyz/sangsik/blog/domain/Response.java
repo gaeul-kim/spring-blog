@@ -1,11 +1,9 @@
 package xyz.sangsik.blog.domain;
 
-import lombok.Data;
-
-@Data
-public class CommonResponse {
+public class Response {
     private String status;
     private String message;
+    private Long id;
 
     public static final String SUCCESS = "success";
     public static final String FAIL = "fail";
@@ -19,5 +17,20 @@ public class CommonResponse {
     public void setError() {
         this.status = FAIL;
         this.message = "오류가 발생하였습니다.";
+    }
+
+    public void setSuccess() {
+        this.status = SUCCESS;
+        this.message = "요청이 성공적으로 완료되었습니다.";
+    }
+
+    public void setSuccess(Long id) {
+        this.id = id;
+        this.setSuccess();
+    }
+
+    public void setDuplicateUser() {
+        this.status = FAIL;
+        this.message = "사용자가 이미 존재합니다.";
     }
 }

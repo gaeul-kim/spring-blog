@@ -32,9 +32,9 @@ public class BlogApplication {
         public void run(String... args) throws Exception {
 
             User[] users = {
-                    new User("sangsik", "11111")
-                    , new User("sion", "22222")
-                    , new User("iuu", "33333")
+                    new User("sangsik", "abcd11111!")
+                    , new User("sion", "aaaa22222!")
+                    , new User("iuu", "bbbb33333!")
             };
             for (User u : users) {
                 userRepository.save(u);

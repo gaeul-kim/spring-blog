@@ -10,7 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.domain.Post;
-import xyz.sangsik.blog.domain.PostResponse;
+import xyz.sangsik.blog.domain.Response;
 import xyz.sangsik.blog.repository.UserRepository;
 import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.CategoryPropertyEditor;
@@ -59,7 +59,7 @@ public class PostController {
 
     @ResponseBody
     @PostMapping("/write")
-    public PostResponse write(Model model, @Valid Post post, BindingResult bindingResult, PostResponse response) {
+    public Response write(Model model, @Valid Post post, BindingResult bindingResult, Response response) {
         if (bindingResult.hasErrors()) {
             response.setBindingError();
             return response;
@@ -68,7 +68,7 @@ public class PostController {
         // todo: 사용자 정보 입력
         post.setWriter(userRepository.findOne(1L));
 
-        response.setSuccess(postService.add(post));
+        response.setSuccess(postService.add(post).getId());
         return response;
     }
 

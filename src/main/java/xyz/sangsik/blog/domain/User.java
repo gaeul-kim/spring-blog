@@ -11,7 +11,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.RegEx;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -35,10 +37,11 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Length(min = 3, max = 15)
+    @Pattern(message = "3~15자의 영문, 숫자, 특수기호(_)만 가능합니다.", regexp = "[A-Za-z0-9_]{3,15}")
     private String name;
 
     @NotBlank
+    @Pattern(message = "5~15자의 영문, 숫자나 특수문자가 필요합니다.", regexp = "(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{5,15}")
     private String password;
 
     @CreatedDate
