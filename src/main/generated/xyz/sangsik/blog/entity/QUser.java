@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -15,7 +16,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 1775007806L;
+    private static final long serialVersionUID = -1342569345L;
 
     public static final QUser user = new QUser("user");
 
@@ -29,9 +30,9 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath nickname = createString("nickname");
-
     public final StringPath password = createString("password");
+
+    public final SetPath<Role, QRole> roles = this.<Role, QRole>createSet("roles", Role.class, QRole.class, PathInits.DIRECT2);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

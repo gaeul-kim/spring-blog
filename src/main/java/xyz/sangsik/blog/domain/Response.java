@@ -29,8 +29,4 @@ public class Response {
         this.setSuccess();
     }
 
-    public void setDuplicateUser() {
-        this.status = FAIL;
-        this.message = "사용자가 이미 존재합니다.";
-    }
 }

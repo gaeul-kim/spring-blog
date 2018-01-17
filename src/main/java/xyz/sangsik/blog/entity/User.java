@@ -1,20 +1,18 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.util.StringUtils;
 
-import javax.annotation.RegEx;
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by sangsik on 2017-12-14.
@@ -37,12 +35,18 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Pattern(message = "3~15자의 영문, 숫자, 특수기호(_)만 가능합니다.", regexp = "[A-Za-z0-9_]{3,15}")
+    @Column(unique = true)
     private String name;
 
     @NotBlank
-    @Pattern(message = "5~15자의 영문, 숫자나 특수문자가 필요합니다.", regexp = "(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{5,15}")
     private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<Role>();
 
     @CreatedDate
     private Date createdDate;

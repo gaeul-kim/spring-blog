@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,13 +16,13 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QPost extends EntityPathBase<Post> {
 
-    private static final long serialVersionUID = 1774855443L;
+    private static final long serialVersionUID = -1342721708L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QPost post = new QPost("post");
 
-    public final EnumPath<Category> category = createEnum("category", Category.class);
+    public final EnumPath<xyz.sangsik.blog.domain.Category> category = createEnum("category", xyz.sangsik.blog.domain.Category.class);
 
     public final StringPath content = createString("content");
 

@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.controller;
+package xyz.sangsik.blog.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

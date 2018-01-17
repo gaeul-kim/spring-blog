@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.entity;
 
 import com.youbenzi.mdtool.tool.MDTool;
 import lombok.*;
@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.util.BooleanToStringConverter;
 
 import javax.persistence.*;

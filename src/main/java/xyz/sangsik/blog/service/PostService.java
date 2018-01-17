@@ -5,9 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import xyz.sangsik.blog.domain.Category;
-import xyz.sangsik.blog.domain.Post;
+import xyz.sangsik.blog.entity.Post;
 import xyz.sangsik.blog.domain.PostPredicate;
-import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.repository.PostRepository;
 
 import javax.transaction.Transactional;

@@ -3,6 +3,7 @@ package xyz.sangsik.blog.domain;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.util.StringUtils;
+import xyz.sangsik.blog.entity.QPost;
 
 public class PostPredicate {
     public static Predicate search(Category category, String writer) {

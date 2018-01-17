@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/sidebar"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Blog Home</title>
+    <title>Blog - Sign Up</title>
 </head>
 <body>
 
@@ -14,24 +14,28 @@
     <hr>
 
     <div class="row">
-        <form id="join-form" class="col-lg-12 mb-4" action="/join" method="post">
-            <div class="form-group">
+        <form id="join-form" class="col-lg-12 mb-4" th:action="@{/join}" th:object="${user}" method="post">
+            <div class="form-group max-width-300">
                 <label for="name" class="d-none">아이디</label>
                 <input id="name" class="form-control" name="name" type="text" placeholder="아이디"
-                       data-validate-type="name" data-validate-required="true" th:value="${user.name}">
+                       data-validate-type="name" data-validate-required="true" th:field="${user.name}">
+                <span class="error" th:errors="${user.name}"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group max-width-300">
                 <label for="password" class="d-none">비밀번호</label>
                 <input id="password" class="form-control" name="password" type="password" placeholder="비밀번호"
                        data-validate-type="password" data-validate-required="true" th:value="${user.password}">
+                <span class="error" th:errors="${user.password}"></span>
+
             </div>
-            <div class="form-group">
-                <label for="password-check" class="d-none">비밀번호 확인</label>
-                <input id="password-check" class="form-control" type="password" placeholder="비밀번호 확인"
-                       data-validate-type="password-check" data-validate-required="true">
-                <span class="error" th:text="${message}"></span>
+            <div class="form-group max-width-300">
+                <label for="password-confirm" class="d-none">비밀번호 확인</label>
+                <input id="password-confirm" class="form-control" name="passwordConfirm" type="password"
+                       placeholder="비밀번호 확인"
+                       data-validate-type="password-confirm" data-validate-required="true" th:value="${user.passwordConfirm}">
+                <span class="error" th:errors="${user.passwordConfirm}"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group max-width-300">
                 <button id="join-submit" class="btn btn-secondary form-control" type="submit">Sign up</button>
             </div>
         </form>
@@ -47,6 +51,7 @@
                 var _val = _this.val();
                 var _regExp = new RegExp();
                 var _message = '';
+                var _test = true;
 
                 _this.closest('div').find('span.error').remove();
 
@@ -57,13 +62,14 @@
                         _message = (!_test) ? '3~15자의 영문, 숫자, 특수기호(_)만 가능합니다.' : '';
                         break;
                     case 'password':
-                        _regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{5,15}$/;
+                        _regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{5,20}$/;
                         _test = _regExp.test(_val);
-                        _message = (!_test) ? '5~15자의 영문, 숫자나 특수문자가 필요합니다.' : '';
+                        _message = (!_test) ? '5~20자의 영문, 숫자나 특수문자가 필요합니다.' : '';
                         break;
-                    case 'password-check':
+                    case 'password-confirm':
                         var _password = _this.closest('form').find('#password').val();
-                        _message = (_val != _password) ? '비밀번호가 일치하지 않습니다.' : '';
+                        _test = _val == _password;
+                        _message = (!_test) ? '비밀번호가 일치하지 않습니다.' : '';
                         break;
                 }
 
@@ -72,8 +78,8 @@
                     _isValidate = false;
                 }
 
-            });
 
+            });
             return _isValidate;
         }
 

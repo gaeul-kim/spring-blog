@@ -35,11 +35,13 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-devtools')
     compile("com.querydsl:querydsl-core:$querydslVersion")
     compile("com.querydsl:querydsl-apt:$querydslVersion")
     compile("com.querydsl:querydsl-jpa:$querydslVersion")
     runtime('org.hsqldb:hsqldb')
+    runtime('mysql:mysql-connector-java')
 
 
     /* front-end lib dependency */

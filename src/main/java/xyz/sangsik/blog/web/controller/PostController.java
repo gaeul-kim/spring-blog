@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.controller;
+package xyz.sangsik.blog.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import xyz.sangsik.blog.domain.Category;
-import xyz.sangsik.blog.domain.Post;
+import xyz.sangsik.blog.entity.Post;
 import xyz.sangsik.blog.domain.Response;
 import xyz.sangsik.blog.repository.UserRepository;
 import xyz.sangsik.blog.service.PostService;
@@ -60,14 +60,14 @@ public class PostController {
     @ResponseBody
     @PostMapping("/write")
     public Response write(Model model, @Valid Post post, BindingResult bindingResult, Response response) {
+        //TODO:응답형식 변경
         if (bindingResult.hasErrors()) {
             response.setBindingError();
             return response;
         }
 
-        // todo: 사용자 정보 입력
+        //TODO: 사용자 정보 입력
         post.setWriter(userRepository.findOne(1L));
-
         response.setSuccess(postService.add(post).getId());
         return response;
     }
