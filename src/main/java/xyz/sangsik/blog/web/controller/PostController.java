@@ -37,7 +37,6 @@ public class PostController {
         Page<Post> posts = postService.search(category, writer, pageable);
 
         model.addAttribute("category", category);
-        model.addAttribute("writer", writer);
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<Post>(posts));
         model.addAttribute("active", "home");
