@@ -27,13 +27,18 @@ public class PostService {
     @Transactional
     public Post get(Long id) {
         Post post = postRepository.findOne(id);
-        if (post != null) {
-            post.increaseViewCount();
-        }
+        increaseViewCount(post);
         return post;
     }
 
     public Post add(Post post) {
         return postRepository.save(post);
+    }
+
+    private void increaseViewCount(Post post) {
+        if (post != null) {
+            post.increaseViewCount();
+        }
+        //TODO: add increase rules
     }
 }
