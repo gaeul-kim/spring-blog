@@ -10,3 +10,6 @@ spring:
     mode : 'LEGACYHTML5'
   messages:
     basename: 'validation'
+  h2:
+    console:
+      enabled: true
