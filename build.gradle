@@ -40,7 +40,7 @@ dependencies {
     compile("com.querydsl:querydsl-core:$querydslVersion")
     compile("com.querydsl:querydsl-apt:$querydslVersion")
     compile("com.querydsl:querydsl-jpa:$querydslVersion")
-    runtime('org.hsqldb:hsqldb')
+    compile('com.h2database:h2')
     runtime('mysql:mysql-connector-java')
 
 
