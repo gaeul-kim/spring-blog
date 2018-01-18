@@ -1,0 +1,12 @@
+server:
+  port: 7070
+
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: false
+    mode : 'LEGACYHTML5'
+  messages:
+    basename: 'validation'
