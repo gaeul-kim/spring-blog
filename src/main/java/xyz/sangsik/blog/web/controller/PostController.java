@@ -3,6 +3,7 @@ package xyz.sangsik.blog.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import xyz.sangsik.blog.domain.Category;
 import xyz.sangsik.blog.entity.Post;
 import xyz.sangsik.blog.domain.Response;
 import xyz.sangsik.blog.repository.UserRepository;
+import xyz.sangsik.blog.security.UserPrincipal;
 import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.CategoryPropertyEditor;
 import xyz.sangsik.blog.util.PageWrapper;
@@ -58,16 +60,20 @@ public class PostController {
 
     @ResponseBody
     @PostMapping("/write")
-    public Response write(Model model, @Valid Post post, BindingResult bindingResult, Response response) {
-        //TODO:응답형식 변경
+    public Response write(@Valid Post post, BindingResult bindingResult, Response response, @AuthenticationPrincipal UserPrincipal activeUser) {
+        //TODO : 응답형식 변경
         if (bindingResult.hasErrors()) {
             response.setBindingError();
             return response;
         }
 
-        //TODO: 사용자 정보 입력
-        post.setWriter(userRepository.findOne(1L));
-        response.setSuccess(postService.add(post).getId());
+        // TODO: 응답을 어떻게 분기시키지
+        try {
+            post.setWriter(activeUser.getUser());
+            response.setSuccess(postService.add(post).getId());
+        } catch (Exception e) {
+            response.setError();
+        }
         return response;
     }
 

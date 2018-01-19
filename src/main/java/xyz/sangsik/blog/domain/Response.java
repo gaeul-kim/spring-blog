@@ -1,8 +1,16 @@
 package xyz.sangsik.blog.domain;
 
+import lombok.Getter;
+
 public class Response {
+
+    @Getter
     private String status;
+
+    @Getter
     private String message;
+
+    @Getter
     private Long id;
 
     public static final String SUCCESS = "success";

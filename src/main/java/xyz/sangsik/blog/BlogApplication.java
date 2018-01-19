@@ -42,8 +42,8 @@ public class BlogApplication {
 
             User[] users = {
                     new User("sangsik", "qwe123")
-                    , new User("sion", "qwe123!")
-                    , new User("iuu", "qwe123!")
+                    , new User("sion", "qwe123")
+                    , new User("iuu", "qwe123")
             };
 
             for (User u : users) {
