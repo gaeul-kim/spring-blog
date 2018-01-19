@@ -41,7 +41,7 @@ dependencies {
     compile("com.querydsl:querydsl-apt:$querydslVersion")
     compile("com.querydsl:querydsl-jpa:$querydslVersion")
     compile('com.h2database:h2')
-    runtime('mysql:mysql-connector-java')
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
 
 
     /* front-end lib dependency */

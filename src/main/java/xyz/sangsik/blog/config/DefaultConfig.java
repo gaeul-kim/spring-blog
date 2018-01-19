@@ -30,8 +30,4 @@ public class DefaultConfig extends WebMvcConfigurerAdapter {
         super.addArgumentResolvers(argumentResolvers);
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
