@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/sidebar"
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/default"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>Blog - Login</title>
@@ -31,16 +31,23 @@
             </div>
         </form>
     </div>
-
     <script>
-/*        $('#login-submit').click(function (e) {
+        $('#login-submit').click(function (e) {
             e.preventDefault();
-            var _form = $('#join-form');
-            var _result = _form.validate();
-            if (_result) {
+            var _form = $('#login-form');
+            var _hasEmptyValue = false;
+
+            _form.find('input').each(function () {
+                var _value = $(this).val().trim();
+                if (!_value) {
+                    _hasEmptyValue = true;
+                    return;
+                }
+            })
+            if (!_hasEmptyValue) {
                 _form.submit();
             }
-        })*/
+        })
     </script>
 </div>
 
