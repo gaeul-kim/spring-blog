@@ -1,16 +1,16 @@
-package xyz.sangsik.blog.entity;
+package xyz.sangsik.blog.domain;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Data
+@Getter
 @Entity
 @NoArgsConstructor
-public class Role {
+public class Role extends BaseTime {
 
     public Role(String name) {
         this.name = name;

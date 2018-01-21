@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.entity;
+package xyz.sangsik.blog.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,7 @@ import java.util.Set;
 @Entity
 @ToString
 @NoArgsConstructor
-@EntityListeners(value = {AuditingEntityListener.class})
-public class User {
+public class User extends BaseTime{
 
     public User(String name, String password) {
         this.name = name;
@@ -47,12 +46,6 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<Role>();
-
-    @CreatedDate
-    private Date createdDate;
-
-    @LastModifiedDate
-    private Date lastModifiedDate;
 
     private int loginCount;
 

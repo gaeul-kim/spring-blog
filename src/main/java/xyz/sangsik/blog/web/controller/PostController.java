@@ -7,18 +7,20 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import xyz.sangsik.blog.domain.Category;
-import xyz.sangsik.blog.entity.Post;
-import xyz.sangsik.blog.domain.Response;
-import xyz.sangsik.blog.repository.UserRepository;
-import xyz.sangsik.blog.security.UserPrincipal;
+import xyz.sangsik.blog.domain.Post;
+import xyz.sangsik.blog.web.dto.AjaxResponse;
+import xyz.sangsik.blog.web.dto.post.PostRequestDto;
+import xyz.sangsik.blog.web.dto.post.PostResponseDto;
+import xyz.sangsik.blog.web.security.UserPrincipal;
+import xyz.sangsik.blog.service.CategoryService;
 import xyz.sangsik.blog.service.PostService;
-import xyz.sangsik.blog.util.CategoryPropertyEditor;
 import xyz.sangsik.blog.util.PageWrapper;
+import xyz.sangsik.blog.web.validator.PostValidator;
 
-import javax.validation.Valid;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import java.util.HashMap;
 
 @Controller
 public class PostController {
@@ -27,22 +29,25 @@ public class PostController {
     PostService postService;
 
     @Autowired
-    UserRepository userRepository;
+    CategoryService categoryService;
 
-    @InitBinder
-    public void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.registerCustomEditor(Category.class, new CategoryPropertyEditor());
+    @Autowired
+    PostValidator postValidator;
+
+    @Autowired
+    Provider<PostRequestDto> postRequestDtoProvider;
+
+    @GetMapping({"/posts", "/posts/"})
+    public String posts(Model model, String category, Pageable pageable) {
+        Page<PostResponseDto> posts = postService.getPosts(category, pageable);
+        model.addAttribute("posts", posts.getContent());
+        model.addAttribute("page", new PageWrapper<PostResponseDto>(posts));
+        return "/post/list";
     }
 
-    @GetMapping("/post")
-    public String home(Model model, @RequestParam(value = "category", required = false, defaultValue = "ALL") Category category, String writer, Pageable pageable) {
-        Page<Post> posts = postService.search(category, writer, pageable);
-
-        model.addAttribute("category", category);
-        model.addAttribute("posts", posts.getContent());
-        model.addAttribute("page", new PageWrapper<Post>(posts));
-        model.addAttribute("active", "home");
-        return "/post/list";
+    @GetMapping("/posts/{category}")
+    public String category(Model model, @PathVariable String category, Pageable pageable) {
+        return posts(model, category, pageable);
     }
 
     @GetMapping("/post/{id}")
@@ -53,39 +58,27 @@ public class PostController {
 
     @GetMapping("/write")
     public String write(Model model) {
-        model.addAttribute("categories", Category.values());
-        model.addAttribute("active", "add");
+        model.addAttribute("categories", categoryService.getCategories());
         return "/post/write";
     }
 
     @ResponseBody
     @PostMapping("/write")
-    public Response write(@Valid Post post, BindingResult bindingResult, Response response, @AuthenticationPrincipal UserPrincipal activeUser) {
-        //TODO : 응답형식 변경
+    public AjaxResponse write(PostRequestDto requestDto, BindingResult bindingResult, AjaxResponse ajaxResponse, @AuthenticationPrincipal UserPrincipal activeUser) {
+        PostRequestDto providedDto = postRequestDtoProvider.get();
+        providedDto.bindingRequest(requestDto);
+        // TODO : PostRequestDto를 prototype bean으로 사용하기위해서 만들었는데.. 깔끔하게 바꾸는 방법이 있을까.
+
+        postValidator.validate(providedDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            response.setBindingError();
-            return response;
+            ajaxResponse.setBindingError();
+            return ajaxResponse;
         }
 
-        // TODO: 응답을 어떻게 분기시키지
-        try {
-            post.setWriter(activeUser.getUser());
-            response.setSuccess(postService.add(post).getId());
-        } catch (Exception e) {
-            response.setError();
-        }
-        return response;
-    }
-
-    @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable Long id) {
-        model.addAttribute("post", postService.get(id));
-
-        return "edit";
-    }
-
-    @PostMapping("/edit")
-    public String edit(Model model, Post post) {
-        return "redirect:/post/" + post.getId();
+        Post post = providedDto.toEntity();
+        post.setAuthor(activeUser.getUser());
+        ajaxResponse.setSuccess(postService.add(post).getId());
+        // todo : 에러 처리가 필요할까?
+        return ajaxResponse;
     }
 }

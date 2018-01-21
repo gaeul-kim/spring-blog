@@ -11,9 +11,10 @@
 
     <!-- Date/Time/Author -->
     <p>
-        <a th:href="@{/post(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
-        <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}+' by '">Posted on January 1, 2017 by</span>
-        <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.name}">Start Bootstrap</a>
+        <a th:href="@{/posts/{category}(category=${post.category})}" th:text="${post.category}">Category Name</a>
+        <span th:text="'Posted on ' + ${post.createdDate}+' by '">Posted on January 1, 2017 by</span>
+        <a href="javascript:void(0)" th:text="${post.author}">Start Bootstrap</a>
+        <!-- todo : 회원정보 팝업 -->
     </p>
     <hr>
 
@@ -22,7 +23,7 @@
 
     <hr>-->
 
-    <div id="content-area" th:utext="${post.htmlContent}"></div>
+    <div id="content-area" th:utext="${post.content}"></div>
     <hr>
 
     <!-- Comments Form -->

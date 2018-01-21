@@ -1,10 +1,10 @@
-package xyz.sangsik.blog.security;
+package xyz.sangsik.blog.web.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import xyz.sangsik.blog.entity.Role;
-import xyz.sangsik.blog.entity.User;
+import xyz.sangsik.blog.domain.Role;
+import xyz.sangsik.blog.domain.User;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.entity;
+package xyz.sangsik.blog.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,15 +16,19 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = -1342569345L;
+    private static final long serialVersionUID = 1775007806L;
 
     public static final QUser user = new QUser("user");
 
-    public final DateTimePath<java.util.Date> createdDate = createDateTime("createdDate", java.util.Date.class);
+    public final QBaseTime _super = new QBaseTime(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.util.Date> lastModifiedDate = createDateTime("lastModifiedDate", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
     public final NumberPath<Integer> loginCount = createNumber("loginCount", Integer.class);
 

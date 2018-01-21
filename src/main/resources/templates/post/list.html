@@ -5,7 +5,7 @@
 <div layout:fragment="content">
 
     <h1 class="mt-4">
-        <span th:text="${category.name}">Category name</span>
+        <span th:text="${category==null?'전체':category}">Category name</span>
         <small th:text="'('+${page.totalCount}+')'">(500)</small>
     </h1>
     <hr>
@@ -13,14 +13,15 @@
     <!-- Blog Post -->
     <div class="card mb-4" th:each="post:${posts}">
         <div class="card-body">
-            <a class="text-dark nounderline" th:href="@{post/{id}(id=${post.id})}">
+            <a class="text-dark nounderline" th:href="@{/post/{id}(id=${post.id})}">
                 <h2 class="card-title title-summary"><span th:text="${post.title}">Post Title</span></h2>
                 <p class="card-text content-summary" th:text="${post.contentSummary}"></p></a>
         </div>
         <div class="card-footer text-muted">
-            <a th:href="@{/post(category=${post.category})}" th:text="${post.category.name}">Category Name</a>
-            <span th:text="'Posted on ' + ${#dates.format(post.createdDate, 'yyyy-MM-dd')}+' by '">Posted on January 1, 2017 by</span>
-            <a th:href="@{/post(writer=${post.writer.name})}" th:text="${post.writer.name}">Start Bootstrap</a>
+            <a th:href="@{/posts/{category}(category=${post.category})}" th:text="${post.category}">Category Name</a>
+            <span th:text="'Posted on ' + ${post.createdDate}+' by '">Posted on January 1, 2017 by</span>
+            <a href="javascript:void(0)" th:text="${post.author}">Start Bootstrap</a>
+            <!-- todo : 회원정보 팝업 -->
         </div>
     </div>
 
@@ -29,30 +30,30 @@
         <li class="page-item" th:classappend="${page.firstPage}?'disabled':''">
             <span class="page-link" th:if="${page.firstPage}">&laquo;</span>
             <a class="page-link" th:if="${not page.firstPage}"
-               th:href="@{${page.url}(category=${category},writer=${writer},page=1)}">&laquo;</a>
+               th:href="@{/posts{category}(category=${category==null?'':'/'+category},page=1)}">&laquo;</a>
         </li>
         <li class="page-item" th:classappend="${page.hasPreviousPage}?'':'disabled'">
             <span class="page-link" th:if="${not page.hasPreviousPage}">&larr;</span>
             <a class="page-link" th:if="${page.hasPreviousPage}"
-               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.number-1})}"
+               th:href="@{/posts{category}(category=${category==null?'':'/'+category},page=${page.number-1})}"
                title='Go to previous page'>&larr;</a>
         </li>
         <li class="page-item" th:each="item : ${page.items}" th:classappend="${item.current}? 'active' : ''">
             <span span class="page-link" th:if='${item.current}' th:text='${item.number}'>1</span>
             <a span class="page-link" th:if="${not item.current}"
-               th:href="@{${page.url}(category=${category},writer=${writer},page=${item.number})}">
+               th:href="@{/posts{category}(category=${category==null?'':'/'+category},page=${item.number})}">
                 <span th:text="${item.number}">1</span></a>
         </li>
         <li class="page-item" th:classappend="${page.hasNextPage}? '' : 'disabled'">
             <span span class="page-link" th:if="${not page.hasNextPage}">&gt;</span>
             <a span class="page-link" th:if="${page.hasNextPage}"
-               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.number+1})}"
+               th:href="@{/posts{category}(category=${category==null?'':'/'+category},page=${page.number+1})}"
                title='Go to next page'>&gt;</a>
         </li>
         <li class="page-item" th:classappend="${page.lastPage}? 'disabled' : ''">
             <span span class="page-link" th:if="${page.lastPage}">&raquo;</span>
             <a span class="page-link" th:if="${not page.lastPage}"
-               th:href="@{${page.url}(category=${category},writer=${writer},page=${page.totalPages})}">&raquo;</a>
+               th:href="@{/posts{category}(category=${category==null?'':'/'+category},page=${page.totalPages})}">&raquo;</a>
         </li>
     </ul>
 

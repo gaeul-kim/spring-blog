@@ -1,4 +1,4 @@
-package xyz.sangsik.blog.entity;
+package xyz.sangsik.blog.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,29 +16,33 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QPost extends EntityPathBase<Post> {
 
-    private static final long serialVersionUID = -1342721708L;
+    private static final long serialVersionUID = 1774855443L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QPost post = new QPost("post");
 
-    public final EnumPath<xyz.sangsik.blog.domain.Category> category = createEnum("category", xyz.sangsik.blog.domain.Category.class);
+    public final QBaseTime _super = new QBaseTime(this);
+
+    public final QUser author;
+
+    public final QCategory category;
 
     public final StringPath content = createString("content");
 
-    public final DateTimePath<java.util.Date> createdDate = createDateTime("createdDate", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isDeleted = createBoolean("isDeleted");
 
-    public final DateTimePath<java.util.Date> lastModifiedDate = createDateTime("lastModifiedDate", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> lastModifiedDate = _super.lastModifiedDate;
 
     public final StringPath title = createString("title");
 
     public final NumberPath<Integer> viewCount = createNumber("viewCount", Integer.class);
-
-    public final QUser writer;
 
     public QPost(String variable) {
         this(Post.class, forVariable(variable), INITS);
@@ -58,7 +62,8 @@ public class QPost extends EntityPathBase<Post> {
 
     public QPost(Class<? extends Post> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.writer = inits.isInitialized("writer") ? new QUser(forProperty("writer")) : null;
+        this.author = inits.isInitialized("author") ? new QUser(forProperty("author")) : null;
+        this.category = inits.isInitialized("category") ? new QCategory(forProperty("category")) : null;
     }
 
 }

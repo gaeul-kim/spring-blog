@@ -1,8 +1,8 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.web.dto;
 
 import lombok.Getter;
 
-public class Response {
+public class AjaxResponse {
 
     @Getter
     private String status;
@@ -15,7 +15,6 @@ public class Response {
 
     public static final String SUCCESS = "success";
     public static final String FAIL = "fail";
-
 
     public void setBindingError() {
         this.status = FAIL;

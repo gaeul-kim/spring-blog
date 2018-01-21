@@ -1,20 +1,28 @@
 package xyz.sangsik.blog.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by sangsik on 2017-12-27.
- */
-@AllArgsConstructor
-public enum Category {
-    IT("IT", true), PROGRAMMING("프로그래밍", true), TRAVEL("여행", true), INVALID("미분류", true), ALL("전체", false);
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+@NoArgsConstructor
+public class Category extends BaseTime {
+
+    public Category(String name) {
+        this.name = name;
+    }
+
+    @Id
+    @GeneratedValue
+    @Getter
+    private Long id;
 
     @Getter
+    @Setter
     private String name;
 
-    @Setter
-    @Getter
-    private boolean selectable;
 }

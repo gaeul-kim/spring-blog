@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import xyz.sangsik.blog.entity.User;
+import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.service.UserService;
 import xyz.sangsik.blog.web.validator.UserValidator;
 

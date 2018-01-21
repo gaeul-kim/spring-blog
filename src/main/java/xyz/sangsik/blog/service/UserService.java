@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import xyz.sangsik.blog.entity.User;
+import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.repository.RoleRepository;
 import xyz.sangsik.blog.repository.UserRepository;
 

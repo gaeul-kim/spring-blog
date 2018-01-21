@@ -24,7 +24,7 @@
         </div>
         <div class="input-group mb-2">
             <select id="post-category" class="form-control">
-                <option th:each="category:${categories}" th:if="${category.selectable}" th:value="${category}"
+                <option th:each="category:${categories}" th:value="${category.id}"
                         th:text="${category.name}">1
                 </option>
             </select>

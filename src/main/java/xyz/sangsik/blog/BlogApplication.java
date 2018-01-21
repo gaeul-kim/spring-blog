@@ -8,9 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 import xyz.sangsik.blog.domain.Category;
-import xyz.sangsik.blog.entity.Post;
-import xyz.sangsik.blog.entity.Role;
-import xyz.sangsik.blog.entity.User;
+import xyz.sangsik.blog.domain.Post;
+import xyz.sangsik.blog.domain.Role;
+import xyz.sangsik.blog.domain.User;
+import xyz.sangsik.blog.repository.CategoryRepository;
 import xyz.sangsik.blog.repository.PostRepository;
 import xyz.sangsik.blog.repository.RoleRepository;
 import xyz.sangsik.blog.repository.UserRepository;
@@ -25,14 +26,17 @@ public class BlogApplication {
         private final PostRepository postRepository;
         private final UserRepository userRepository;
         private final RoleRepository roleRepository;
+        private final CategoryRepository categoryRepository;
         private final UserService userService;
 
+
         @Autowired
-        public DummyData(PostRepository postRepository, UserRepository userRepository, RoleRepository roleRepository, UserService userService) {
+        public DummyData(PostRepository postRepository, UserRepository userRepository, RoleRepository roleRepository, UserService userService, CategoryRepository categoryRepository) {
             this.postRepository = postRepository;
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
             this.userService = userService;
+            this.categoryRepository = categoryRepository;
         }
 
         @Override
@@ -40,37 +44,25 @@ public class BlogApplication {
 
             Role r1 = roleRepository.save(new Role("USER"));
 
+            Category c1 = categoryRepository.save(new Category("Java"));
+            Category c2 = categoryRepository.save(new Category("HTML"));
+
             User[] users = {
                     new User("sangsik", "qwe123")
                     , new User("sion", "qwe123")
                     , new User("iuu", "qwe123")
             };
-
             for (User u : users) {
                 userService.add(u);
             }
 
-
-            Category category = null;
             Lorem lorem = LoremIpsum.getInstance();
 
-            for (int i = 1; i <= 500; i++) {
-
-                switch (i % 3) {
-                    case 0:
-                        category = Category.IT;
-                        break;
-                    case 1:
-                        category = Category.PROGRAMMING;
-                        break;
-                    case 2:
-                        category = Category.TRAVEL;
-                        break;
-                }
-                postRepository.save(new Post(category
-                        , lorem.getTitle(1, 10)
-                        , lorem.getParagraphs(1, 5)
-                        , userRepository.findOne((long) (Math.random() * 3 + 1))));
+            for (int i = 1; i <= 100; i++) {
+                postRepository.save(
+                        new Post(categoryRepository.findOne(1L), lorem.getTitle(1, 10)
+                                , lorem.getParagraphs(1, 5)
+                                , userRepository.findOne((long) (Math.random() * 3 + 1))));
             }
         }
     }
