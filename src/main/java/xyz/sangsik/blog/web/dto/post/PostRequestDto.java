@@ -6,9 +6,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xyz.sangsik.blog.domain.Post;
-import xyz.sangsik.blog.service.CategoryService;
-
-import java.util.Map;
+import xyz.sangsik.blog.repository.CategoryRepository;
 
 @Getter
 @Setter
@@ -17,7 +15,7 @@ import java.util.Map;
 public class PostRequestDto {
 
     @Autowired
-    CategoryService categoryService;
+    CategoryRepository categoryRepository;
 
     private Long category;
     private String title;
@@ -30,6 +28,6 @@ public class PostRequestDto {
     }
 
     public Post toEntity() {
-        return new Post(this.categoryService.get(category), this.title, this.content);
+        return new Post(categoryRepository.findOne(category), title, content);
     }
 }

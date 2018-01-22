@@ -9,9 +9,9 @@ import xyz.sangsik.blog.domain.Comment;
 import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.repository.PostRepository;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @Component
 public class CommentRequestDto {
     @Autowired

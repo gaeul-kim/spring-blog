@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import xyz.sangsik.blog.repository.CategoryRepository;
 import xyz.sangsik.blog.web.dto.post.PostRequestDto;
-import xyz.sangsik.blog.service.CategoryService;
 
 @Component
 public class PostValidator implements Validator {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -34,6 +34,6 @@ public class PostValidator implements Validator {
     }
 
     private boolean isCorrectCategory(Long category) {
-        return categoryService.get(category) != null ? true : false;
+        return categoryRepository.findOne(category) != null ? true : false;
     }
 }

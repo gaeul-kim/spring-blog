@@ -10,9 +10,9 @@ public class CommentResponseDto {
     private String content;
     private String author;
 
-    public CommentResponseDto(Comment c) {
-        this.id = c.getId();
-        this.content = c.getContent();
-        this.author = c.getAuthor().getName();
+    public CommentResponseDto(Comment comment) {
+        this.id = comment.getId();
+        this.content = comment.getContent();
+        this.author = comment.getAuthor().getName();
     }
 }

@@ -18,12 +18,4 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category get(Long id) {
-        return categoryRepository.findOne(id);
-    }
-
-    public Category get(String name) {
-        return categoryRepository.findByName(name);
-    }
-
 }

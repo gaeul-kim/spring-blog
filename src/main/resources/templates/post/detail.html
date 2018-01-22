@@ -30,60 +30,62 @@
     <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-            <form id="comment-form">
+            <form id="comment-form" action="/comment" method="post">
                 <div class="input-group">
-                    <textarea class="form-control" rows="2"></textarea>
+                    <textarea class="form-control" rows="2" th:maxlength="1000"></textarea>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">submit</button>
+                        <button id="comment-submit" class="btn btn-outline-secondary" type="button">submit</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Single Comment -->
-    <div class="media mb-4">
+    <div id="comment-dummy" class="comment media mb-4 d-none">
         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
         <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
-            vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-            lacinia congue felis in faucibus.
+            <h5 class="comment-author mt-0">Comment author</h5>
+            <div class="comment-content ">Content</div>
         </div>
     </div>
-
-    <!-- Comment with nested comments -->
-    <div class="media mb-4">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-        <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio,
-            vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-            lacinia congue felis in faucibus.
-
-            <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                    vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-
-            <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0">Commenter Name</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                    purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                    vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-
-        </div>
+    <div id="comment-box">
     </div>
+    <!--todo:로그인 확인-->
 
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            getComments();
+
+            $('#comment-submit').click(function (e) {
+                e.preventDefault();
+                var _value = $('#comment-form textarea').val().trim();
+                if (_value)
+                    var commentData = {
+                        'postId': [[${post.id}]],
+                        'content': _value
+                    };
+                $.post('/comment', commentData, function (data) {
+                    appendComment(data);
+                });
+            });
+
+
+            function getComments() {
+                $.get("/comment/[[${post.id}]]", function (data) {
+                    $.each(data, function (key, value) {
+                        appendComment(value);
+                    });
+                });
+            }
+
+            function appendComment(data) {
+                var _comment = $('#comment-dummy').clone(true).removeAttr('id').removeClass('d-none');
+                _comment.find('.comment-author').text(data.author);
+                _comment.find('.comment-content').text(data.content);
+                $('#comment-box').append(_comment.show());
+            }
+
+        })
+    </script>
 </div>
 
 </div>

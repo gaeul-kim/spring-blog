@@ -1,6 +1,8 @@
 package xyz.sangsik.blog.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
@@ -19,6 +21,9 @@ public class Comment extends BaseTime {
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotBlank
+    @Length(max = 1000)
     private String content;
 
     @ManyToOne
