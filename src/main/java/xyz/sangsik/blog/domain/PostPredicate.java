@@ -16,20 +16,4 @@ public class PostPredicate {
 
         return builder;
     }
-
-    public static Predicate search(String category, String writer) {
-        QPost post = QPost.post;
-        BooleanBuilder builder = new BooleanBuilder();
-/*
-        if (!StringUtils.isEmpty(category)) {
-            builder.and();
-        }
-        if (!StringUtils.isEmpty(writer)) {
-            builder.and(post.author.name.eq(writer));
-        }
-
-        builder.and(post.isDeleted.eq(false));
-*/
-        return builder;
-    }
 }

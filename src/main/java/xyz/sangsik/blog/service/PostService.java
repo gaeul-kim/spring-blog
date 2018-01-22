@@ -22,15 +22,8 @@ public class PostService {
     PostRepository postRepository;
 
     @Transactional
-    public Page<PostResponseDto> getPosts(String category, Pageable pageable) {
-        Page<Post> posts = postRepository.findAll(PostPredicate.search(category), pageable);
-        Page<PostResponseDto> dtos = posts.map(new Converter<Post, PostResponseDto>() {
-            @Override
-            public PostResponseDto convert(Post post) {
-                return new PostResponseDto(post);
-            }
-        });
-        return dtos;
+    public Page<Post> getPosts(String category, Pageable pageable) {
+        return postRepository.findAll(PostPredicate.search(category), pageable);
     }
 
     @Transactional

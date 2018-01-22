@@ -1,6 +1,7 @@
 package xyz.sangsik.blog.web.dto;
 
 import lombok.Getter;
+import xyz.sangsik.blog.domain.Post;
 
 public class AjaxResponse {
 
@@ -21,19 +22,21 @@ public class AjaxResponse {
         this.message = "입력값이 올바르지 않습니다.";
     }
 
-    public void setError() {
+    private void setError() {
         this.status = FAIL;
         this.message = "오류가 발생하였습니다.";
     }
 
-    public void setSuccess() {
-        this.status = SUCCESS;
-        this.message = "요청이 성공적으로 완료되었습니다.";
-    }
-
-    public void setSuccess(Long id) {
+    private void setSuccess(Long id) {
         this.id = id;
-        this.setSuccess();
+        this.status = SUCCESS;
     }
 
+    public void makeResponse(Post post) {
+        if (post == null) {
+            setError();
+        } else {
+            setSuccess(post.getId());
+        }
+    }
 }

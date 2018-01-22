@@ -1,6 +1,7 @@
 package xyz.sangsik.blog.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,7 +40,13 @@ public class PostController {
 
     @GetMapping({"/posts", "/posts/"})
     public String posts(Model model, String category, Pageable pageable) {
-        Page<PostResponseDto> posts = postService.getPosts(category, pageable);
+        Page<PostResponseDto> posts = postService.getPosts(category, pageable).map(new Converter<Post, PostResponseDto>() {
+            @Override
+            public PostResponseDto convert(Post post) {
+                return new PostResponseDto(post);
+            }
+        }); // TODO : 람다로 변경
+
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<PostResponseDto>(posts));
         return "/post/list";
@@ -67,7 +74,6 @@ public class PostController {
     public AjaxResponse write(PostRequestDto requestDto, BindingResult bindingResult, AjaxResponse ajaxResponse, @AuthenticationPrincipal UserPrincipal activeUser) {
         PostRequestDto providedDto = postRequestDtoProvider.get();
         providedDto.bindingRequest(requestDto);
-        // TODO : PostRequestDto를 prototype bean으로 사용하기위해서 만들었는데.. 깔끔하게 바꾸는 방법이 있을까.
 
         postValidator.validate(providedDto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -77,8 +83,7 @@ public class PostController {
 
         Post post = providedDto.toEntity();
         post.setAuthor(activeUser.getUser());
-        ajaxResponse.setSuccess(postService.add(post).getId());
-        // todo : 에러 처리가 필요할까?
+        ajaxResponse.makeResponse(postService.add(post));
         return ajaxResponse;
     }
 }
