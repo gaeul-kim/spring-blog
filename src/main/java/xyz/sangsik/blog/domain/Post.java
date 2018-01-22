@@ -10,6 +10,7 @@ import xyz.sangsik.blog.service.CategoryService;
 import xyz.sangsik.blog.util.BooleanToStringConverter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by sangsik on 2017-12-14.
@@ -63,4 +64,7 @@ public class Post extends BaseTime {
     public void increaseViewCount() {
         this.viewCount++;
     }
+
+    @OneToMany(mappedBy = "post",fetch = FetchType.EAGER)
+    private List<Comment> comments;
 }

@@ -27,14 +27,13 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponseDto get(Long id) {
+    public Post get(Long id) {
         Post post = postRepository.findOne(id);
         if (post == null) {
             throw new RuntimeException("Invalid Request : Post does not exist or has been deleted");
         }
         post.increaseViewCount();
-        PostResponseDto dto = new PostResponseDto(post);
-        return dto;
+        return post;
     }
 
     public Post add(Post post) {

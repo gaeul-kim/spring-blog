@@ -33,4 +33,7 @@ public class UserService {
         return userRepository.findByName(name);
     }
 
+    public User get(Long id) {
+        return userRepository.findOne(id);
+    }
 }

@@ -93,3 +93,13 @@ footer {
 #search-form .form-control {
     border-right: none;
 }
+
+/* comment form */
+#comment-form button {
+    height: 100%;
+    border: 1px solid #ced4da;
+}
+
+#comment-form .form-control {
+
+}

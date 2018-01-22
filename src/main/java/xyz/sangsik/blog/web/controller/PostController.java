@@ -61,7 +61,8 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     public String view(Model model, @PathVariable Long id) {
-        model.addAttribute("post", postService.get(id));
+        model.addAttribute("categories", categoryService.getCategories());
+        model.addAttribute("post", new PostResponseDto(postService.get(id)));
         return "/post/detail";
     }
 
