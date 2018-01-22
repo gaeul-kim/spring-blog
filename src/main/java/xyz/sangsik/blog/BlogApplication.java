@@ -44,8 +44,10 @@ public class BlogApplication {
 
             Role r1 = roleRepository.save(new Role("USER"));
 
-            Category c1 = categoryRepository.save(new Category("Java"));
-            Category c2 = categoryRepository.save(new Category("HTML"));
+            Category c1 = categoryRepository.save(new Category("java"));
+            Category c2 = categoryRepository.save(new Category("html"));
+            Category c3 = categoryRepository.save(new Category("javascript"));
+            Category c4 = categoryRepository.save(new Category("etc"));
 
             User[] users = {
                     new User("sangsik", "qwe123")
@@ -58,9 +60,9 @@ public class BlogApplication {
 
             Lorem lorem = LoremIpsum.getInstance();
 
-            for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= 500; i++) {
                 postRepository.save(
-                        new Post(categoryRepository.findOne(1L), lorem.getTitle(1, 10)
+                        new Post(categoryRepository.findOne((long) (Math.random() * 4 + 1)), lorem.getTitle(1, 10)
                                 , lorem.getParagraphs(1, 5)
                                 , userRepository.findOne((long) (Math.random() * 3 + 1))));
             }

@@ -47,6 +47,8 @@ public class PostController {
             }
         }); // TODO : 람다로 변경
 
+        model.addAttribute("categories", categoryService.getCategories()); // TODO : 카테고리를 메모리에 가지고 있을 방법
+
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<PostResponseDto>(posts));
         return "/post/list";

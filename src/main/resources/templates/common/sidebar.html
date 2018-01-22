@@ -7,11 +7,11 @@
     <div class="card my-4">
         <h5 class="card-header">Search</h5>
         <div class="card-body">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
-                </span>
+            <div id="search-form" class="input-group">
+                <input type="text" class="form-control">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
             </div>
         </div>
     </div>
@@ -21,29 +21,12 @@
         <h5 class="card-header">Categories</h5>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="#">Web Design</a>
-                        </li>
-                        <li>
-                            <a href="#">HTML</a>
-                        </li>
-                        <li>
-                            <a href="#">Freebies</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="list-unstyled mb-0">
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">Tutorials</a>
+                        <li class="sidebar-category" th:each="category:${categories}">
+                            <a th:href="@{/posts/{category}(category=${category.name})}" th:text="${category.name}">
+                                Category name
+                            </a>
                         </li>
                     </ul>
                 </div>

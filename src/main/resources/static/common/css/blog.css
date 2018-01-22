@@ -74,3 +74,22 @@ footer {
     color: red;
     font-size: 0.7em;
 }
+
+.sidebar-category {
+    display: inline;
+    margin-right: 1.25em;
+}
+
+.sidebar-category:last-child {
+    margin-right: 0;
+}
+
+/* search form */
+#search-form .input-group-text {
+    border-left: none;
+    background-color: #fff;
+}
+
+#search-form .form-control {
+    border-right: none;
+}
