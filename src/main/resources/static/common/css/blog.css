@@ -100,6 +100,6 @@ footer {
     border: 1px solid #ced4da;
 }
 
-#comment-form .form-control {
-
+#comment-form .not-login:hover {
+    cursor: pointer;
 }

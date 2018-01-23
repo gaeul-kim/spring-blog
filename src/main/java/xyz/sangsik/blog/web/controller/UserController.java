@@ -11,6 +11,8 @@ import xyz.sangsik.blog.domain.User;
 import xyz.sangsik.blog.service.UserService;
 import xyz.sangsik.blog.web.validator.UserValidator;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class UserController {
 
@@ -21,7 +23,8 @@ public class UserController {
     UserValidator userValidator;
 
     @GetMapping("/login")
-    public String loginForm(Model model, User user) {
+    public String loginForm(Model model, User user, HttpServletRequest request) {
+        request.getSession().setAttribute("prevPage", request.getHeader("Referer"));
         return "user/login";
     }
 

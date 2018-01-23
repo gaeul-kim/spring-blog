@@ -32,7 +32,10 @@
         <div class="card-body">
             <form id="comment-form" action="/comment" method="post">
                 <div class="input-group">
-                    <textarea class="form-control" rows="2" th:maxlength="1000"></textarea>
+                    <textarea class="form-control" rows="2"
+                              th:classappend="${#authentication.isAuthenticated()?'':'not-login'}"
+                              th:maxlength="1000"
+                              th:text="${#authorization.expression('isAuthenticated()')}"></textarea>
                     <div class="input-group-append">
                         <button id="comment-submit" class="btn btn-outline-secondary" type="button">submit</button>
                     </div>
@@ -58,14 +61,16 @@
             $('#comment-submit').click(function (e) {
                 e.preventDefault();
                 var _value = $('#comment-form textarea').val().trim();
-                if (_value)
+                if (_value) {
                     var commentData = {
                         'postId': [[${post.id}]],
                         'content': _value
                     };
-                $.post('/comment', commentData, function (data) {
-                    appendComment(data);
-                });
+                    $.post('/comment', commentData, function (data) {
+                        appendComment(data);
+                        $('#comment-form textarea').val('');
+                    });
+                }
             });
 
 

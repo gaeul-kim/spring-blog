@@ -10,6 +10,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import xyz.sangsik.blog.web.security.CustomLoginSuccessHandler;
+import xyz.sangsik.blog.web.security.CustomLogoutSuccessHandler;
 import xyz.sangsik.blog.web.security.UserDetailsServiceImpl;
 
 
@@ -34,6 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomLoginSuccessHandler("/");
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -44,22 +60,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/write").authenticated()
+                .antMatchers("/comment").authenticated()
                 .and().csrf().disable().formLogin()
+                .successHandler(authenticationSuccessHandler())
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/")
                 .usernameParameter("name")
-                .passwordParameter("password");
+                .passwordParameter("password")
+                .and()
+                .logout()
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .logoutSuccessUrl("/");
 
         // to use H2 web console
         http.headers().frameOptions().disable();
 
     }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-    }
-
-
 }
+
+
+
