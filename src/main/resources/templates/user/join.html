@@ -32,7 +32,8 @@
                 <label for="password-confirm" class="d-none">비밀번호 확인</label>
                 <input id="password-confirm" class="form-control" name="passwordConfirm" type="password"
                        placeholder="비밀번호 확인"
-                       data-validate-type="password-confirm" data-validate-required="true" th:value="${user.passwordConfirm}">
+                       data-validate-type="password-confirm" data-validate-required="true"
+                       th:value="${user.passwordConfirm}">
                 <span class="error" th:errors="${user.passwordConfirm}"></span>
             </div>
             <div class="form-group max-width-300">
@@ -42,54 +43,15 @@
     </div>
 
     <script>
-        $.fn.validate = function () {
-            var _isValidate = true;
-
-            $(this).find('input[data-validate-required="true"]').each(function () {
-                var _this = $(this);
-                var _type = _this.data('validate-type');
-                var _val = _this.val();
-                var _regExp = new RegExp();
-                var _message = '';
-                var _test = true;
-
-                _this.closest('div').find('span.error').remove();
-
-                switch (_type) {
-                    case 'name':
-                        _regExp = /^[A-Za-z0-9_]{3,15}$/;
-                        _test = _regExp.test(_val);
-                        _message = (!_test) ? '3~15자의 영문, 숫자, 특수기호(_)만 가능합니다.' : '';
-                        break;
-                    case 'password':
-                        _regExp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{5,20}$/;
-                        _test = _regExp.test(_val);
-                        _message = (!_test) ? '5~20자의 영문, 숫자나 특수문자가 필요합니다.' : '';
-                        break;
-                    case 'password-confirm':
-                        var _password = _this.closest('form').find('#password').val();
-                        _test = _val == _password;
-                        _message = (!_test) ? '비밀번호가 일치하지 않습니다.' : '';
-                        break;
+        $(document).ready(function () {
+            $('#join-submit').click(function (e) {
+                e.preventDefault();
+                var _form = $('#join-form');
+                var _result = _form.validate();
+                if (_result) {
+                    _form.submit();
                 }
-
-                if (!_test) {
-                    _this.closest('div').append('<span class="error">' + _message + '</span>');
-                    _isValidate = false;
-                }
-
-
             });
-            return _isValidate;
-        }
-
-        $('#join-submit').click(function (e) {
-            e.preventDefault();
-            var _form = $('#join-form');
-            var _result = _form.validate();
-            if (_result) {
-                _form.submit();
-            }
         })
     </script>
 </div>

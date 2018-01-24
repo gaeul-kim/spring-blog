@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import xyz.sangsik.blog.web.security.CustomAuthenticationFailureHandler;
 import xyz.sangsik.blog.web.security.CustomLoginSuccessHandler;
 import xyz.sangsik.blog.web.security.CustomLogoutSuccessHandler;
 import xyz.sangsik.blog.web.security.UserDetailsServiceImpl;
@@ -41,6 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler("/login?error=true");
+    }
+
+    @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new CustomLoginSuccessHandler("/");
     }
@@ -57,19 +64,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/write").authenticated()
                 .antMatchers("/comment").authenticated()
-                .and().csrf().disable().formLogin()
-                .successHandler(authenticationSuccessHandler())
+                .and()
+            .csrf()
+                .disable()
+            .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .failureUrl("/login?error=true")
                 .usernameParameter("name")
                 .passwordParameter("password")
+                .successHandler(authenticationSuccessHandler())
+                .failureHandler(authenticationFailureHandler())
                 .and()
-                .logout()
+            .logout()
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .logoutSuccessUrl("/");
 

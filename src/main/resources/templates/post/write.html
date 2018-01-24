@@ -35,42 +35,34 @@
         <button id="post-submit" class="btn btn-secondary form-control" type="button">Submit</button>
 
         <script>
-            var simplemde = new SimpleMDE({element: $("#post-content")[0], spellChecker: false});
+            $(document).ready(function () {
+                var simplemde = new SimpleMDE({element: $("#post-content")[0], spellChecker: false});
 
-            $('#post-submit').click(function () {
+                $('#post-submit').click(function () {
+                    var category = $('#post-category').val();
+                    var title = $('#post-title').val();
+                    var content = simplemde.value();
 
-                var category = $('#post-category').val();
-                var title = $('#post-title').val();
-                var content = simplemde.value();
-
-                if (true) {
-                    var post = {
-                        'category': category,
-                        'title': title,
-                        'content': content
-                    };
-                    submit(post);
-                }
-            });
-
-            function validate() {
-                for (i = 0; i < arguments.length; i++) {
-                    if (!arguments[i]) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-            function submit(param) {
-                $.post('/write', param, function (data) {
-                    if (data.status == 'success') {
-                        location.href = '/post/' + data.id;
-                    } else {
-                        alert(data.message);
+                    if (true) {
+                        var post = {
+                            'category': category,
+                            'title': title,
+                            'content': content
+                        };
+                        submit(post);
                     }
                 });
-            }
+
+                function submit(param) {
+                    $.post('/write', param, function (data) {
+                        if (data.status == 'success') {
+                            location.href = '/post/' + data.id;
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                }
+            })
         </script>
 
     </div>

@@ -7,6 +7,10 @@
     text-decoration: none
 }
 
+.cursor-pointer:hover {
+    cursor: pointer;
+}
+
 html, body {
     height: 100%;
 }
@@ -95,11 +99,12 @@ footer {
 }
 
 /* comment form */
-#comment-form button {
+#comment-submit {
     height: 100%;
     border: 1px solid #ced4da;
 }
 
-#comment-form .not-login:hover {
-    cursor: pointer;
+/* modal */
+#login-modal {
+    transform: translateY(25%);
 }

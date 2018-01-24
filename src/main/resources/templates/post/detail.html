@@ -30,12 +30,13 @@
     <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-            <form id="comment-form" action="/comment" method="post">
+            <textarea class="form-control cursor-pointer bg-white login-modal-trigger" readonly="readonly"
+                      placeholder="로그인이 필요합니다." rows="2"
+                      th:unless="${#authorization.expression('isAuthenticated()')}"></textarea>
+            <form id="comment-form" action="/comment" method="post"
+                  th:if="${#authorization.expression('isAuthenticated()')}">
                 <div class="input-group">
-                    <textarea class="form-control" rows="2"
-                              th:classappend="${#authentication.isAuthenticated()?'':'not-login'}"
-                              th:maxlength="1000"
-                              th:text="${#authorization.expression('isAuthenticated()')}"></textarea>
+                    <textarea class="form-control" rows="2" th:maxlength="1000"></textarea>
                     <div class="input-group-append">
                         <button id="comment-submit" class="btn btn-outline-secondary" type="button">submit</button>
                     </div>
@@ -52,8 +53,6 @@
     </div>
     <div id="comment-box">
     </div>
-    <!--todo:로그인 확인-->
-
     <script th:inline="javascript">
         $(document).ready(function () {
             getComments();
@@ -88,7 +87,6 @@
                 _comment.find('.comment-content').text(data.content);
                 $('#comment-box').append(_comment.show());
             }
-
         })
     </script>
 </div>

@@ -15,7 +15,7 @@
                         <a class="nav-link" th:href="@{/join}">Sign up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+                        <a class="nav-link login-modal-trigger" href="javascript:void(0)">Login</a>
                     </li>
                 </th:block>
                 <th:block sec:authorize="isAuthenticated()">
