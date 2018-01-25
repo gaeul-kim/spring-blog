@@ -6,7 +6,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Comment extends BaseTime {
