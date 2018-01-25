@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<nav th:fragment="navigationFragment" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav th:fragment="navigationFragment" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">TIL</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -10,22 +10,30 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+
+
                 <th:block sec:authorize="isAnonymous()">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/join}">Sign up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link login-modal-trigger" href="javascript:void(0)">Login</a>
-                    </li>
+                    <a class="nav-link" th:href="@{/join}">Sign up</a>
+                    <a class="nav-link login-modal-trigger" href="javascript:void(0)">Login</a>
                 </th:block>
+
+
                 <th:block sec:authorize="isAuthenticated()">
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/write}">Write Post</a>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/write}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right bg-dark">
+                            <a class="nav-link" href="javascript:void(0)">Mypage</a>
+                            <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </div>
                     </li>
                 </th:block>
+
             </ul>
         </div>
     </div>

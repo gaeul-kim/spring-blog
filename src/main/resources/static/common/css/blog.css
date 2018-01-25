@@ -119,3 +119,15 @@ footer {
 #login-modal .modal-dialog {
     transform: translateY(75%);
 }
+
+.dropdown-menu {
+    min-width: 1rem;
+}
+
+.dropdown-menu a {
+    color: rgba(255, 255, 255, .5) !important;
+}
+
+.dropdown-menu a:hover {
+    color: white !important;
+}
