@@ -19,6 +19,17 @@ body {
     padding-top: 54px;
 }
 
+@media (max-width: 767px) {
+    footer {
+        display: none;
+    }
+
+    .wrap {
+        padding-bottom: 1rem !important;
+
+    }
+}
+
 @media (min-width: 992px) {
     body {
         padding-top: 56px;
@@ -35,7 +46,7 @@ footer {
 .wrap {
     min-height: 100%;
     position: relative;
-    padding-bottom: 8rem !important;
+    padding-bottom: 5rem !important;
 }
 
 .title-summary {
@@ -105,6 +116,6 @@ footer {
 }
 
 /* modal */
-#login-modal {
-    transform: translateY(25%);
+#login-modal .modal-dialog {
+    transform: translateY(75%);
 }

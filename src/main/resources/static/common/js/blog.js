@@ -4,6 +4,14 @@ $(document).ready(function () {
         $('#login-modal').modal();
     });
 
+
+    $('#login-modal').on('hide.bs.modal', function(e){
+        $('#modal-name').val('');
+        $('#modal-password').val('');
+        e.stopImmediatePropagation();
+
+    });
+
     $('.login-submit').click(function (e) {
         e.preventDefault();
         var _form = $(this).closest('.login-form');
