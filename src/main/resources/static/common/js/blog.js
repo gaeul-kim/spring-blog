@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('.login-modal-trigger').click(function () {
-        $.get('/saveCurrentURL');
+        $.post('/saveCurrentURL');
         $('#login-modal').modal();
     });
 

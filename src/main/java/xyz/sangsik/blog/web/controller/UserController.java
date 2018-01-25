@@ -24,7 +24,7 @@ public class UserController {
     UserValidator userValidator;
 
     @ResponseBody
-    @GetMapping("/saveCurrentURL")
+    @PostMapping("/saveCurrentURL")
     public HttpStatus saveCurrentURL(HttpServletRequest request) {
         String referer = request.getHeader("Referer");
         request.getSession().setAttribute("prevPage", referer);
