@@ -51,7 +51,7 @@ public class PostController {
 
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("page", new PageWrapper<PostResponseDto>(posts));
-        return "/post/list";
+        return "post/list";
     }
 
     @GetMapping("/posts/{category}")
@@ -63,13 +63,13 @@ public class PostController {
     public String view(Model model, @PathVariable Long id) {
         model.addAttribute("categories", categoryService.getCategories());
         model.addAttribute("post", new PostResponseDto(postService.get(id)));
-        return "/post/detail";
+        return "post/detail";
     }
 
     @GetMapping("/write")
     public String write(Model model) {
         model.addAttribute("categories", categoryService.getCategories());
-        return "/post/write";
+        return "post/write";
     }
 
     @ResponseBody
