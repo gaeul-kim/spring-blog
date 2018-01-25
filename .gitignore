@@ -16,6 +16,7 @@
 *.iml
 *.ipr
 out/
+/src/main/generated
 
 ### NetBeans ###
 nbproject/private/
@@ -24,3 +25,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+generated
