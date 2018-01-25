@@ -42,8 +42,9 @@
                     var category = $('#post-category').val();
                     var title = $('#post-title').val();
                     var content = simplemde.value();
+                    var verify = verifyEmptyValue(category, title, content);
 
-                    if (true) {
+                    if (verify) {
                         var post = {
                             'category': category,
                             'title': title,
@@ -52,6 +53,15 @@
                         submit(post);
                     }
                 });
+
+                function verifyEmptyValue() {
+                    for (i = 0; i < arguments.length; i++) {
+                        if (!arguments[i]) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
 
                 function submit(param) {
                     $.post('/write', param, function (data) {

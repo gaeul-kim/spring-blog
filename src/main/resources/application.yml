@@ -1,6 +1,5 @@
 server:
   port: 7070
-
 spring:
   devtools:
     livereload:
@@ -8,7 +7,6 @@ spring:
   thymeleaf:
     cache: false
     mode : 'LEGACYHTML5'
-    prefix: classpath:/templates/
   messages:
     basename: 'validation'
   h2:
