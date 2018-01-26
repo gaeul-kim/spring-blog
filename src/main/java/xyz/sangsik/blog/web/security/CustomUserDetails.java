@@ -3,17 +3,17 @@ package xyz.sangsik.blog.web.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import xyz.sangsik.blog.domain.Role;
-import xyz.sangsik.blog.domain.User;
+import xyz.sangsik.blog.model.entity.Role;
+import xyz.sangsik.blog.model.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UserPrincipal implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private User user;
 
-    public UserPrincipal(User user) {
+    public CustomUserDetails(User user) {
         this.user = user;
     }
 
@@ -28,7 +28,7 @@ public class UserPrincipal implements UserDetails {
         return authorities;
     }
 
-    public User getUser() {
+    public User getEntity() {
         return this.user;
     }
 

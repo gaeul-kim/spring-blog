@@ -1,12 +1,11 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
-import xyz.sangsik.blog.service.CategoryService;
+import xyz.sangsik.blog.model.BaseTime;
 import xyz.sangsik.blog.util.BooleanToStringConverter;
 
 import javax.persistence.*;
@@ -49,7 +48,6 @@ public class Post extends BaseTime {
 
     @Lob
     @NotBlank
-    @Length(max = 10000)
     private String content;
 
     @ManyToOne

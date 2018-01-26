@@ -5,8 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import xyz.sangsik.blog.model.entity.Category;
+import xyz.sangsik.blog.model.entity.Post;
 import xyz.sangsik.blog.repository.CategoryRepository;
-import xyz.sangsik.blog.web.dto.post.PostRequestDto;
 
 @Component
 public class PostValidator implements Validator {
@@ -16,24 +17,23 @@ public class PostValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PostRequestDto.class.isAssignableFrom(clazz);
+        return Post.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        PostRequestDto dto = (PostRequestDto) target;
+        Post post = (Post) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "category", "NotEmpty");
-
-        if (!isCorrectCategory(dto.getCategory())) {
-            errors.rejectValue("category", "Invalid.category.name");
-        }
-
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "content", "NotEmpty");
+
+        if (isInvalidCategory(post.getCategory())) {
+            errors.rejectValue("category", "Invalid.category.name");
+        }
     }
 
-    private boolean isCorrectCategory(Long category) {
-        return categoryRepository.findOne(category) != null ? true : false;
+    private boolean isInvalidCategory(Category category) {
+        return categoryRepository.findOne(category.getId()) == null ? true : false;
     }
 }

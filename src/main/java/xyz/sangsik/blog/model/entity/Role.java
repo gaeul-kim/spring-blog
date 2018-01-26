@@ -1,7 +1,8 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import xyz.sangsik.blog.model.BaseTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

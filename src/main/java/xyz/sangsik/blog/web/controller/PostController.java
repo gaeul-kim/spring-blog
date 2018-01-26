@@ -9,19 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import xyz.sangsik.blog.domain.Post;
-import xyz.sangsik.blog.web.dto.AjaxResponse;
-import xyz.sangsik.blog.web.dto.post.PostRequestDto;
-import xyz.sangsik.blog.web.dto.post.PostResponseDto;
-import xyz.sangsik.blog.web.security.UserPrincipal;
+import xyz.sangsik.blog.model.entity.Post;
+import xyz.sangsik.blog.model.ResponseObject.HttpResponse;
+import xyz.sangsik.blog.model.ResponseObject.PostResponse;
+import xyz.sangsik.blog.web.security.CustomUserDetails;
 import xyz.sangsik.blog.service.CategoryService;
 import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.PageWrapper;
 import xyz.sangsik.blog.web.validator.PostValidator;
-
-import javax.inject.Inject;
-import javax.inject.Provider;
-import java.util.HashMap;
 
 @Controller
 public class PostController {
@@ -35,22 +30,18 @@ public class PostController {
     @Autowired
     PostValidator postValidator;
 
-    @Autowired
-    Provider<PostRequestDto> postRequestDtoProvider;
-
     @GetMapping({"/posts", "/posts/"})
     public String posts(Model model, String category, Pageable pageable) {
-        Page<PostResponseDto> posts = postService.getPosts(category, pageable).map(new Converter<Post, PostResponseDto>() {
-            @Override
-            public PostResponseDto convert(Post post) {
-                return new PostResponseDto(post);
-            }
-        }); // TODO : 람다로 변경
-
-        model.addAttribute("categories", categoryService.getCategories()); // TODO : 카테고리를 메모리에 가지고 있을 방법
-
-        model.addAttribute("posts", posts.getContent());
-        model.addAttribute("page", new PageWrapper<PostResponseDto>(posts));
+        Page<PostResponse> posts = postService.getPosts(category, pageable)
+                .map(new Converter<Post, PostResponse>() {
+                    @Override
+                    public PostResponse convert(Post post) {
+                        return new PostResponse(post);
+                    }
+                });
+        // TODO : 카테고리를 메모리에 가지고 있을 방법
+        model.addAttribute("categories", categoryService.getCategories());
+        model.addAttribute("page", new PageWrapper<PostResponse>(posts));
         return "post/list";
     }
 
@@ -62,7 +53,7 @@ public class PostController {
     @GetMapping("/post/{id}")
     public String view(Model model, @PathVariable Long id) {
         model.addAttribute("categories", categoryService.getCategories());
-        model.addAttribute("post", new PostResponseDto(postService.get(id)));
+        model.addAttribute("post", new PostResponse(postService.get(id)));
         return "post/detail";
     }
 
@@ -74,19 +65,13 @@ public class PostController {
 
     @ResponseBody
     @PostMapping("/write")
-    public AjaxResponse write(PostRequestDto requestDto, BindingResult bindingResult, AjaxResponse ajaxResponse, @AuthenticationPrincipal UserPrincipal activeUser) {
-        PostRequestDto providedDto = postRequestDtoProvider.get();
-        providedDto.bindingRequest(requestDto);
-
-        postValidator.validate(providedDto, bindingResult);
+    public HttpResponse write(HttpResponse httpResponse, Post post, BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetails activeUser) {
+        postValidator.validate(post, bindingResult);
         if (bindingResult.hasErrors()) {
-            ajaxResponse.setBindingError();
-            return ajaxResponse;
+            return httpResponse.fail();
         }
 
-        Post post = providedDto.toEntity();
-        post.setAuthor(activeUser.getUser());
-        ajaxResponse.makeResponse(postService.add(post));
-        return ajaxResponse;
+        post.setAuthor(activeUser.getEntity());
+        return httpResponse.success(postService.add(post).getId());
     }
 }

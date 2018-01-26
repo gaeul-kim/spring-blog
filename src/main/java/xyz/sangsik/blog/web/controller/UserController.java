@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
-import xyz.sangsik.blog.domain.User;
+import xyz.sangsik.blog.model.entity.User;
 import xyz.sangsik.blog.service.UserService;
 import xyz.sangsik.blog.web.validator.UserValidator;
 
@@ -22,14 +22,6 @@ public class UserController {
 
     @Autowired
     UserValidator userValidator;
-
-    @ResponseBody
-    @PostMapping("/saveCurrentURL")
-    public HttpStatus saveCurrentURL(HttpServletRequest request) {
-        String referer = request.getHeader("Referer");
-        request.getSession().setAttribute("prevPage", referer);
-        return HttpStatus.OK;
-    }
 
     @GetMapping("/login")
     public String loginForm(HttpServletRequest request, HttpSession session, User user,
@@ -47,12 +39,12 @@ public class UserController {
     }
 
     @GetMapping("/join")
-    public String joinForm(Model model, User user) {
+    public String joinForm(User user) {
         return "user/join";
     }
 
     @PostMapping("/join")
-    public String join(Model model, @ModelAttribute User user, BindingResult bindingResult) {
+    public String join(@ModelAttribute User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return "user/join";

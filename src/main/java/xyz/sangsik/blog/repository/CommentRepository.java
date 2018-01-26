@@ -1,7 +1,7 @@
 package xyz.sangsik.blog.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import xyz.sangsik.blog.domain.Comment;
+import xyz.sangsik.blog.model.entity.Comment;
 
 import java.util.List;
 

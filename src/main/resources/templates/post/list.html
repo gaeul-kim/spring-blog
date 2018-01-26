@@ -11,7 +11,7 @@
     <hr>
 
     <!-- Blog Post -->
-    <div class="card mb-4" th:each="post:${posts}">
+    <div class="card mb-4" th:each="post:${page.content}">
         <div class="card-body">
             <a class="text-dark nounderline" th:href="@{/post/{id}(id=${post.id})}">
                 <h2 class="card-title title-summary"><span th:text="${post.title}">Post Title</span></h2>

@@ -1,8 +1,9 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.model.entity;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import xyz.sangsik.blog.model.BaseTime;
 
 import javax.persistence.*;
 
@@ -17,7 +18,6 @@ public class Comment extends BaseTime {
         this.author = author;
         this.post = post;
     }
-
 
     @Id
     @GeneratedValue
@@ -34,4 +34,5 @@ public class Comment extends BaseTime {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
 }

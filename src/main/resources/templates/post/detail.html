@@ -59,15 +59,21 @@
 
             $('#comment-submit').click(function (e) {
                 e.preventDefault();
-                var _value = $('#comment-form textarea').val().trim();
-                if (_value) {
-                    var commentData = {
-                        'postId': [[${post.id}]],
-                        'content': _value
-                    };
-                    $.post('/comment', commentData, function (data) {
+                var comment = $('#comment-form textarea').val().trim();
+                if (comment) {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/comment',
+                        data: {
+                            'post': [[${post.id}]],
+                            'content': comment
+                        }
+                    }).done(function (data) {
                         appendComment(data);
                         $('#comment-form textarea').val('');
+                    }).fail(function () {
+                        location.reload();
                     });
                 }
             });
@@ -82,10 +88,10 @@
             }
 
             function appendComment(data) {
-                var _comment = $('#comment-dummy').clone(true).removeAttr('id').removeClass('d-none');
-                _comment.find('.comment-author').text(data.author);
-                _comment.find('.comment-content').text(data.content);
-                $('#comment-box').append(_comment.show());
+                var commentElement = $('#comment-dummy').clone(true).removeAttr('id').removeClass('d-none');
+                commentElement.find('.comment-author').text(data.author);
+                commentElement.find('.comment-content').text(data.content);
+                $('#comment-box').append(commentElement.show());
             }
         })
     </script>

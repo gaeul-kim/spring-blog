@@ -62,7 +62,6 @@ public class PageWrapper<T> {
         this(page, "");
     }
 
-
     public List<PageItem> getItems() {
         return items;
     }

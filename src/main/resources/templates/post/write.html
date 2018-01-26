@@ -45,14 +45,25 @@
                     var verify = verifyEmptyValue(category, title, content);
 
                     if (verify) {
-                        var post = {
-                            'category': category,
-                            'title': title,
-                            'content': content
-                        };
-                        submit(post);
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            url: '/write',
+                            data: {
+                                'category': category,
+                                'title': title,
+                                'content': content
+                            }
+                        }).done(function (data) {
+                            if (data.status == 'OK') {
+                                location.href = '/post/' + data.id;
+                            }
+                        }).fail(function () {
+                            location.reload();
+                        });
                     }
                 });
+
 
                 function verifyEmptyValue() {
                     for (i = 0; i < arguments.length; i++) {
@@ -61,16 +72,6 @@
                         }
                     }
                     return true;
-                }
-
-                function submit(param) {
-                    $.post('/write', param, function (data) {
-                        if (data.status == 'success') {
-                            location.href = '/post/' + data.id;
-                        } else {
-                            alert(data.message);
-                        }
-                    });
                 }
             })
         </script>

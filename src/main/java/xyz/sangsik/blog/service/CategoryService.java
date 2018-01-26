@@ -2,10 +2,9 @@ package xyz.sangsik.blog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.sangsik.blog.domain.Category;
+import xyz.sangsik.blog.model.entity.Category;
 import xyz.sangsik.blog.repository.CategoryRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

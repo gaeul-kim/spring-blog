@@ -6,19 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import xyz.sangsik.blog.web.security.CustomAuthenticationFailureHandler;
 import xyz.sangsik.blog.web.security.CustomLoginSuccessHandler;
 import xyz.sangsik.blog.web.security.CustomLogoutSuccessHandler;
-import xyz.sangsik.blog.web.security.UserDetailsServiceImpl;
+import xyz.sangsik.blog.web.security.CustomUserDetailsService;
 
 
 @Configuration
@@ -26,7 +23,7 @@ import xyz.sangsik.blog.web.security.UserDetailsServiceImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    CustomUserDetailsService userDetailsService;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

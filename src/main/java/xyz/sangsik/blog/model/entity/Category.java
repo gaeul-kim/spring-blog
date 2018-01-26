@@ -1,13 +1,14 @@
-package xyz.sangsik.blog.domain;
+package xyz.sangsik.blog.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import xyz.sangsik.blog.model.BaseTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Getter
 @Entity
 @NoArgsConstructor
 public class Category extends BaseTime {
@@ -18,11 +19,8 @@ public class Category extends BaseTime {
 
     @Id
     @GeneratedValue
-    @Getter
     private Long id;
 
-    @Getter
-    @Setter
     private String name;
 
 }
