@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import xyz.sangsik.blog.model.entity.User;
+import xyz.sangsik.blog.service.SecurityService;
 import xyz.sangsik.blog.service.UserService;
 import xyz.sangsik.blog.web.validator.UserValidator;
 
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SecurityService securityService;
 
     @Autowired
     UserValidator userValidator;
@@ -49,7 +53,10 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/join";
         }
-        userService.add(user);
+
+        String originalPassword = user.getPassword();
+        userService.registration(user);
+        securityService.autoLogin(user.getName(), originalPassword);
         return "redirect:/";
     }
 }

@@ -67,7 +67,7 @@ public class PostController {
     @PostMapping("/write")
     public HttpResponse write(HttpResponse httpResponse, Post post, BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetails activeUser) {
         postValidator.validate(post, bindingResult);
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || activeUser == null) {
             return httpResponse.fail();
         }
 

@@ -55,7 +55,7 @@ public class BlogApplication {
                     , new User("iuu", "qwe123")
             };
             for (User u : users) {
-                userService.add(u);
+                userService.registration(u);
             }
 
             Lorem lorem = LoremIpsum.getInstance();
