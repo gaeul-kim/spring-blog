@@ -27,18 +27,13 @@ public class UserController {
     @Autowired
     UserValidator userValidator;
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String loginForm(HttpServletRequest request, HttpSession session, User user,
                             @RequestParam(value = "error", required = false) String error) {
         if (StringUtils.isEmpty(error)) {
             String referer = request.getHeader("Referer");
             request.getSession().setAttribute("prevPage", referer);
         }
-
-        user.setName((String) session.getAttribute("name"));
-        user.setPassword((String) session.getAttribute("password"));
-        session.removeAttribute("name");
-        session.removeAttribute("password");
         return "user/login";
     }
 

@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
             .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/loginProcess")
                 .usernameParameter("name")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler())

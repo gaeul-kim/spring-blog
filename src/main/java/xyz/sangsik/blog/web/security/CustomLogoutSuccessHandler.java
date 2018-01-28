@@ -14,7 +14,7 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String referrerUrl = request.getHeader("Referer");
         if (referrerUrl != null) {
-            // todo : 인증이 필요한 referrerUrl 일 경우 기본 URL로 이동할 수 있도록 변경(패턴을 가져올까? 하드코딩?)
+            // todo : 인증이 필요한 refererUrl 일 경우 기본 URL로 이동할 수 있도록 변경
             getRedirectStrategy().sendRedirect(request, response, referrerUrl);
         }
         super.onLogoutSuccess(request, response, authentication);
