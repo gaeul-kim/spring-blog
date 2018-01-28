@@ -18,6 +18,8 @@ import xyz.sangsik.blog.service.PostService;
 import xyz.sangsik.blog.util.PageWrapper;
 import xyz.sangsik.blog.web.validator.PostValidator;
 
+import java.util.function.Function;
+
 @Controller
 public class PostController {
 
@@ -33,12 +35,8 @@ public class PostController {
     @GetMapping({"/posts", "/posts/"})
     public String posts(Model model, String category, Pageable pageable) {
         Page<PostResponse> posts = postService.getPosts(category, pageable)
-                .map(new Converter<Post, PostResponse>() {
-                    @Override
-                    public PostResponse convert(Post post) {
-                        return new PostResponse(post);
-                    }
-                });
+                .map(post -> new PostResponse(post));
+
         // TODO : 카테고리를 메모리에 가지고 있을 방법
         model.addAttribute("categories", categoryService.getCategories());
         model.addAttribute("page", new PageWrapper<PostResponse>(posts));
