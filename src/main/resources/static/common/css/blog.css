@@ -109,6 +109,10 @@ footer {
     border-right: none;
 }
 
+#search-form .search-submit:hover {
+    cursor: pointer;
+}
+
 /* comment form */
 #comment-submit {
     height: 100%;

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import xyz.sangsik.blog.model.entity.Category;
 import xyz.sangsik.blog.model.entity.Post;
 import xyz.sangsik.blog.model.ResponseObject.HttpResponse;
 import xyz.sangsik.blog.model.ResponseObject.PostResponse;
@@ -39,7 +41,7 @@ public class PostController {
 
         // TODO : 카테고리를 메모리에 가지고 있을 방법
         model.addAttribute("categories", categoryService.getCategories());
-        model.addAttribute("page", new PageWrapper<PostResponse>(posts));
+        model.addAttribute("page", new PageWrapper<>(posts));
         return "post/list";
     }
 
@@ -71,5 +73,16 @@ public class PostController {
 
         post.setAuthor(activeUser.getEntity());
         return httpResponse.success(postService.add(post).getId());
+    }
+
+    @GetMapping("/search/{keyword}")
+    public String search(Model model, @PathVariable String keyword, @PageableDefault(size = 10) Pageable pageable) {
+        Page<PostResponse> posts = postService.searchPosts(keyword, pageable)
+                .map(post -> new PostResponse(post));
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("categories", categoryService.getCategories());
+        model.addAttribute("page", new PageWrapper<>(posts));
+        return "post/search";
     }
 }

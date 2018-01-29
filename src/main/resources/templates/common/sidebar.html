@@ -7,12 +7,14 @@
     <div class="card my-4">
         <h5 class="card-header">Search</h5>
         <div class="card-body">
-            <div id="search-form" class="input-group">
-                <input type="text" class="form-control">
-                <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+            <form id="search-form" action="/search/" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" th:value="${keyword}">
+                    <div class="input-group-append">
+                        <span class="input-group-text search-submit"><i class="fa fa-search" aria-hidden="true"></i></span>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -34,14 +36,14 @@
         </div>
     </div>
 
-    <!-- Side Widget -->
+<!--    &lt;!&ndash; Side Widget &ndash;&gt;
     <div class="card my-4">
         <h5 class="card-header">Side Widget</h5>
         <div class="card-body">
             You can put anything you want inside of these side widgets. They are easy to use, and feature the
             new Bootstrap 4 card containers!
         </div>
-    </div>
+    </div>-->
 
 </div>
 </html>

@@ -1,11 +1,22 @@
 $(document).ready(function () {
+
+    $('#search-form').submit(function (e) {
+        e.preventDefault();
+        var _keyword = $(this).find('input[name = "keyword"]').val();
+        location.href = '/search/' + _keyword;
+    });
+
+    $('.search-submit').click(function () {
+        $('#search-form').trigger('submit');
+    });
+
     $('.login-modal-trigger').click(function () {
         $.post('/saveCurrentURL');
         $('#login-modal').modal();
     });
 
 
-    $('#login-modal').on('hide.bs.modal', function(e){
+    $('#login-modal').on('hide.bs.modal', function (e) {
         $('#modal-name').val('');
         $('#modal-password').val('');
         e.stopImmediatePropagation();

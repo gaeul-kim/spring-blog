@@ -20,7 +20,11 @@ public class PostService {
     PostRepository postRepository;
 
     public Page<Post> getPosts(String category, Pageable pageable) {
-        return postRepository.findAll(PostPredicate.search(category), pageable);
+        return postRepository.findAll(PostPredicate.getPostsDefault(category), pageable);
+    }
+
+    public Page<Post> searchPosts(String keyword, Pageable pageable) {
+        return postRepository.findAll(PostPredicate.search(keyword), pageable);
     }
 
     @Transactional
@@ -36,4 +40,6 @@ public class PostService {
     public Post add(Post post) {
         return postRepository.save(post);
     }
+
+
 }
